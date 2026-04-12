@@ -1,0 +1,147 @@
+\begin{thebibliography}{10}
+
+\bibitem{bengio13-rlsurvey}
+Yoshua Bengio, Aaron Courville, and Pascal Vincent.
+\newblock {Representation Learning: A Review and New Perspectives}.
+\newblock {\em IEEE Trans. Pattern Anal. Mach. Intell.}, 35(8):1798--1828, August 2013.
+
+\bibitem{jing21-visualrl}
+Longlong Jing and Yingli Tian.
+\newblock {Self-Supervised Visual Feature Learning With Deep Neural Networks: A Survey}.
+\newblock {\em IEEE Transactions on Pattern Analysis \& Machine Intelligence}, 43(11):4037--4058, November 2021.
+
+\bibitem{mohamed22-speechrl}
+Abdelrahman Mohamed, Hung-yi Lee, Lasse Borgholt, Jakob~D. Havtorn, Joakim Edin, Christian Igel, Katrin Kirchhoff, Shang-Wen Li, Karen Livescu, Lars Maaløe, Tara~N. Sainath, and Shinji Watanabe.
+\newblock {Self-Supervised Speech Representation Learning: A Review}.
+\newblock {\em IEEE Journal of Selected Topics in Signal Processing}, 16(6):1179--1210, 2022.
+
+\bibitem{zhang16-colorization}
+Richard Zhang, Phillip Isola, and Alexei~A. Efros.
+\newblock {Colorful Image Colorization}, 2016.
+
+\bibitem{pathak16-inpainting}
+Deepak Pathak, Philipp Krahenbuhl, Jeff Donahue, Trevor Darrell, and Alexei~A Efros.
+\newblock {Context encoders: Feature learning by inpainting}.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and pattern recognition}, pages 2536--2544, 2016.
+
+\bibitem{noroozi17-puzzle}
+Mehdi Noroozi and Paolo Favaro.
+\newblock {Unsupervised Learning of Visual Representations by Solving Jigsaw Puzzles}, 2017.
+
+\bibitem{vandenoord19-cpc}
+Aaron van~den Oord, Yazhe Li, and Oriol Vinyals.
+\newblock {Representation Learning with Contrastive Predictive Coding}, 2019.
+
+\bibitem{tian20-cmc}
+Yonglong Tian, Dilip Krishnan, and Phillip Isola.
+\newblock {Contrastive Multiview Coding}.
+\newblock In {\em Computer Vision - ECCV 2020: 16th European Conference, Glasgow, UK, August 23-28, 2020, Proceedings, Part XI}, pages 776--794, Berlin, Heidelberg, 2020. Springer-Verlag.
+
+\bibitem{mikolov13-word2vec}
+Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
+\newblock {Efficient Estimation of Word Representations in Vector Space}, 2013.
+
+\bibitem{le14-doc2vec}
+Quoc Le and Tomas Mikolov.
+\newblock {Distributed Representations of Sentences and Documents}.
+\newblock In Eric~P. Xing and Tony Jebara, editors, {\em Proceedings of the 31st International Conference on Machine Learning}, volume~32 of {\em Proceedings of Machine Learning Research}, pages 1188--1196, Bejing, China, 22--24 Jun 2014. PMLR.
+
+\bibitem{angelov20-top2vec}
+Dimo Angelov.
+\newblock {Top2Vec: Distributed Representations of Topics}, 2020.
+
+\bibitem{sutskever14-seq2seq}
+Ilya Sutskever, Oriol Vinyals, and Quoc~V. Le.
+\newblock {Sequence to sequence learning with neural networks}.
+\newblock In {\em Proceedings of the 28th International Conference on Neural Information Processing Systems - Volume 2}, NIPS'14, pages 3104--3112, Cambridge, MA, USA, 2014. MIT Press.
+
+\bibitem{vaswani17-transformer}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N Gomez, \L~ukasz Kaiser, and Illia Polosukhin.
+\newblock {Attention is All you Need}.
+\newblock In I.~Guyon, U.~Von Luxburg, S.~Bengio, H.~Wallach, R.~Fergus, S.~Vishwanathan, and R.~Garnett, editors, {\em Advances in Neural Information Processing Systems}, volume~30. Curran Associates, Inc., 2017.
+
+\bibitem{devlin19-bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding}.
+\newblock In {\em North American Chapter of the Association for Computational Linguistics}, 2019.
+
+\bibitem{vandenoord17-vqvae}
+Aaron van~den Oord, Oriol Vinyals, and Koray Kavukcuoglu.
+\newblock {Neural discrete representation learning}.
+\newblock In {\em Proceedings of the 31st International Conference on Neural Information Processing Systems}, NIPS'17, pages 6309--6318, Red Hook, NY, USA, 2017. Curran Associates Inc.
+
+\bibitem{chung20-apc}
+Yu-An Chung and James~R. Glass.
+\newblock {Generative Pre-Training for Speech with Autoregressive Predictive Coding}.
+\newblock In {\em 2020 IEEE International Conference on Acoustics, Speech and Signal Processing, ICASSP 2020, Barcelona, Spain, May 4-8, 2020}, pages 3497--3501. IEEE, 2020.
+
+\bibitem{baevski20-wav2vec}
+Alexei Baevski, Henry Zhou, Abdelrahman Mohamed, and Michael Auli.
+\newblock {wav2vec 2.0: a framework for self-supervised learning of speech representations}.
+\newblock In {\em Proceedings of the 34th International Conference on Neural Information Processing Systems}, NIPS '20, Red Hook, NY, USA, 2020. Curran Associates Inc.
+
+\bibitem{zerveas21-tsbert}
+George Zerveas, Srideepika Jayaraman, Dhaval Patel, Anuradha Bhamidipaty, and Carsten Eickhoff.
+\newblock {A Transformer-based Framework for Multivariate Time Series Representation Learning}.
+\newblock In {\em Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery \& Data Mining}, KDD '21, pages 2114--2124, New York, NY, USA, 2021. Association for Computing Machinery.
+
+\bibitem{fortuin19-somvae}
+Vincent Fortuin, Matthias H{\"u}ser, Francesco Locatello, Heiko Strathmann, and Gunnar R{\"a}tsch.
+\newblock {SOM-VAE: Interpretable Discrete Representation Learning on Time Series}.
+\newblock In {\em International Conference on Learning Representations}, 2019.
+
+\bibitem{franceschi19-timesampling}
+Jean-Yves Franceschi, Aymeric Dieuleveut, and Martin Jaggi.
+\newblock {\em {Unsupervised scalable representation learning for multivariate time series}}.
+\newblock Curran Associates Inc., Red Hook, NY, USA, 2019.
+
+\bibitem{tonekaboni21-tnc}
+Sana Tonekaboni, Danny Eytan, and Anna Goldenberg.
+\newblock {Unsupervised Representation Learning for Time Series with Temporal Neighborhood Coding}.
+\newblock In {\em International Conference on Learning Representations}, 2021.
+
+\bibitem{eldele21-tstcc}
+Emadeldeen Eldele, Mohamed Ragab, Zhenghua Chen, Min Wu, Chee~Keong Kwoh, Xiaoli Li, and Cuntai Guan.
+\newblock {Time-Series Representation Learning via Temporal and Contextual Contrasting}.
+\newblock In Zhi-Hua Zhou, editor, {\em Proceedings of the Thirtieth International Joint Conference on Artificial Intelligence, {IJCAI-21}}, pages 2352--2359. International Joint Conferences on Artificial Intelligence Organization, 8 2021.
+\newblock Main Track.
+
+\bibitem{yue21-ts2vec}
+Zhihan Yue, Yujing Wang, Juanyong Duan, Tianmeng Yang, Congrui Huang, Yu~Tong, and Bixiong Xu.
+\newblock {TS2Vec: Towards Universal Representation of Time Series}.
+\newblock In {\em AAAI Conference on Artificial Intelligence}, 2021.
+
+\bibitem{pereira20-afib}
+Tania Pereira, Nate Tran, Kais Gadhoumi, Michele~M Pelter, Duc~H Do, Randall~J Lee, Rene Colorado, Karl Meisel, and Xiao Hu.
+\newblock {Photoplethysmography based atrial fibrillation detection: a review}.
+\newblock {\em NPJ Digit. Med.}, 3(1):3, January 2020.
+
+\bibitem{li26-prototype}
+Maximilian~Xiling Li, Korbinian~Franz Rudolf, Paul Mattes, Nils Blank, and Rudolf Lioutikov.
+\newblock {An Overview of Prototype Formulations for Interpretable Deep Learning}, 2026.
+
+\bibitem{chen19-protopnet}
+Chaofan Chen, Oscar Li, Chaofan Tao, Alina~Jade Barnett, Jonathan Su, and Cynthia Rudin.
+\newblock {\em {This looks like that: deep learning for interpretable image recognition}}.
+\newblock Curran Associates Inc., Red Hook, NY, USA, 2019.
+
+\bibitem{donnelly21-deformableprotopnet}
+Jonathan Donnelly, Alina~Jade Barnett, and Chaofan Chen.
+\newblock {Deformable ProtoPNet: An Interpretable Image Classifier Using Deformable Prototypes}.
+\newblock {\em 2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 10255--10265, 2021.
+
+\bibitem{sacha25-protoseg}
+Mikołaj Sacha, Dawid Rymarczyk, Łukasz Struski, Jacek Tabor, and Bartosz Zieliński.
+\newblock {ProtoSeg: Interpretable Semantic Segmentation with Prototypical Parts}, 2025.
+
+\bibitem{ma24-protovit}
+Chiyu Ma, Jon Donnelly, Wenjun Liu, Soroush Vosoughi, Cynthia Rudin, and Chaofan Chen.
+\newblock {Interpretable image classification with adaptive prototype-based vision transformers}.
+\newblock In {\em Proceedings of the 38th International Conference on Neural Information Processing Systems}, NIPS '24, Red Hook, NY, USA, 2024. Curran Associates Inc.
+
+\bibitem{wang20-pacmap}
+Yingfan Wang, Haiyang Huang, Cynthia Rudin, and Yaron Shaposhnik.
+\newblock {Understanding How Dimension Reduction Tools Work: An Empirical Approach to Deciphering t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization}.
+\newblock {\em Journal of Machine Learning Research}, 22(201):1--73, 2021.
+
+\end{thebibliography}

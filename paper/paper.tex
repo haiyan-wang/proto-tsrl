@@ -1,0 +1,235 @@
+\documentclass{article}
+
+
+\usepackage{PRIMEarxiv}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% NOTATION 
+\newcommand{\R}{\mathbb R}
+
+\renewcommand{\t}{\theta}
+
+\pagestyle{fancy}
+\thispagestyle{empty}
+\rhead{ \textit{ }} 
+
+% UPDATE HEADERS
+\fancyhead[LO]{}
+% \fancyhead[RE]{Firstauthor and Secondauthor} % Firstauthor et al. if more than 2 - must use \documentclass[twoside]{article}
+
+%% UPDATE TITLE
+\title{Interpretable Representation Learning for Time Series}
+\author{
+    Haiyan Wang \\
+    Duke University \\
+    \texttt{haiyan.wang916@duke.edu}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+% UPDATE KEYWORDS
+% \keywords{First keyword \and Second keyword \and More}
+
+% %%%%%%%%% INTRODUCTION %%%%%%%%%
+
+\section{Introduction}
+\label{sec:intro}
+
+Time series are prevalent across a wide range of domains and often drive decisionmaking in high-stakes environments including health monitoring, weather forecasting, and financial modeling. However, time series data pose significant challenges for human interpretability due to their high dimensionality with respect to both the length of the series and the number of features in each observation. Moreover, real-world time series data often present with irregularities such as temporal misalignment, uneven lengths, and variable sampling frequencies which can further obfuscate important structure. As a result, time series data are often sparsely labeled, and it is infeasible to annotate large datasets to the extent required for supervised modeling. The ability to learn fixed-length representations of time series without explicit supervision that differentiate relevant patterns from nuisance variation is important for both identifying latent structure within time series data as well as for downstream tasks such as classification and forecasting. 
+
+In this paper, we propose a new approach to learning informative, general-purpose representations of time series that is both \textit{interpretable} and \textit{domain-agnostic}. Our primary contributions are: 
+\begin{itemize}
+    \item A contrastive learning framework that incorporates insights from dimension reduction algorithms by introducing a third class of contrasting samples separate from positive and negative pairings. Unlike previous approaches, contrastive samples are created with both sampling- and augmentation-based methods and do not rely on domain-specific assumptions such as local smoothness.
+    \item A novel architecture that employs multiscale prototype-based learning to capture both local morphological traits and global temporal dynamics. 
+\end{itemize}
+
+% %%%%%%%%% RELATED WORK %%%%%%%%%
+
+\section{Related Work}
+\label{sec:rw}
+
+In the most general sense, representation learning refers to techniques that learn to extract and represent useful information from raw data. This is evidently a broad definition and many methods and models fall under this umbrella including clustering, dimension reduction, and neural networks. Here, we review methods for learning representations without explicit supervision, and in particular, on self-supervised methods. Prior work indicates that learning to solve appropriately designed auxiliary tasks based on data-derived pseudolabels induces models to represent important semantic information embedded in unlabeled data \cite{bengio13-rlsurvey, jing21-visualrl, mohamed22-speechrl}. This is of particular importance for time series data which frequently lack human-recognizable attributes but yield well to pseudolabeling.
+
+A common auxiliary task is learning to reverse augmentations. This is a particularly popular approach for visual data and computer vision (CV) -- augmentations include decolorization \cite{zhang16-colorization}, masking \cite{pathak16-inpainting}, and scrambling \cite{noroozi17-puzzle}. In this case, the original image or some subpart of it is used as the pseudolabel to guide learning, and such approaches assume that data may be characterized by semantic information that is invariant under augmentation. Other auxiliary tasks are contrastive (e.g. \cite{vandenoord19-cpc, tian20-cmc}) -- rather than learning to extract information that characterizes samples, these models learn to extract information that differentiates samples. When applied to downstream tasks such as classification, object detection, and segmentation, the learned representations match or outperform fully supervised training from scratch \cite{jing21-visualrl}. Representation learning has also been successful in settings that involve sequential data. In natural language processing (NLP), algorithms like Word2Vec \cite{mikolov13-word2vec} learn static embeddings for words based on the contexts in which each word was found throughout a large training corpus. Subsequent developments such as Doc2Vec \cite{le14-doc2vec} learned fixed-length representations of entire variable-length passages. Such representations are applied in downstream tasks like topic modeling \cite{angelov20-top2vec} and machine translation \cite{sutskever14-seq2seq}. The invention of the transformer architecture \cite{vaswani17-transformer} further advanced the ability to generate contextual representations via models like BERT \cite{devlin19-bert}. The auxiliary tasks learned by these models are simple predictive problems such as masked- or next- token prediction. Similar techniques (e.g. \cite{vandenoord17-vqvae, chung20-apc, baevski20-wav2vec}) are applied to tasks involving audio data despite its higher complexity relative to language: it is significantly higher dimensional, continuous, and contains many entangled components that don't yield well to segmentation \cite{mohamed22-speechrl}. 
+
+The success of representation learning across such a wide range of data modalities suggests it may be well-suited for application to time series data. Broadly speaking, there are two types of representations that can be learned for a multivariate time series: instance-level representations capture entire series, encompassing multivariate observations across multiple timestamps, while semantic-level representations capture each timestamp individually. The primary focus of existing literature is designing appropriate auxiliary tasks. Some of these tasks are borrowed directly from other fields: for example, drawing inspiration from BERT, encoder-only transformers have learned effective representations by reconstructing masked observations or subsegments within a longer time series \cite{zerveas21-tsbert}. SOM-VAE \cite{fortuin19-somvae} learns representations at a semantic level and opts for a reconstructive auxiliary task: a variational autoencoder (VAE) learns a semantic latent space that is shaped by a discrete self-organizing map (SOM). Given a multivariate time series, the observation at each timestamp is mapped to a continuous latent vector which is then assigned to its nearest SOM embedding. The decoder reconstructs the observation from both the continuous embedding and its SOM label. To represent temporal dynamics, a Markov transition model is learned over the discrete SOM states to predict the state of the next observation in the series. 
+
+Other prior methods implement contrastive auxiliary objectives, raising the question of how best to define contrastive examples. Two major approaches are reflected in the literature: sampling and augmentation. Sampling is usually time-based (e.g. \cite{franceschi19-timesampling}) and draws inspiration from previous successes in NLP. Time-based sampling assumes that, given an arbitrary subseries sampled from a larger time series, temporally close subseries should have similar representations while distant subseries (temporally distant in the same series or from another series) should have different representations. An obvious weakness of time-based sampling is the strong assumption of local smoothness which may not hold for series with sudden distribution changes. TNC \cite{tonekaboni21-tnc} addresses this with a weaker assumption of local smoothness by drawing positive examples for a given subseries from a normal distribution centered at that subseries, the variance of which is a tunable hyperparameter. Additionally, TNC employs positive-unlabeled learning, a variant of contrastive learning which treats nonpositive samples as unknown and reweights their contribution to the overall contrastive loss. The other approach to defining contrastive examples is via augmentation. TS-TCC \cite{eldele21-tstcc} creates different views of the same series with weak (scaling and jittering) and strong (permutation and jittering) augmentations. These views are encoded to an intermediate latent space shaped by a temporal contrasting objective based on cross-view prediction. Intermediate embeddings are then mapped by a nonlinear function to the final representation space which is shaped by a standard contrasting objective. This framework encourages the model to learn both temporal and discriminative patterns that are preserved under augmentation. Lastly, TS2Vec \cite{yue21-ts2vec} also learns semantic-level representations, but these representations can be aggregated into instance-level representations. TS2Vec defines positive pairs by sampling overlapping subseries which are randomly masked and cropped to form distinct contexts; overlapping timestamps are taken as positive pairs. The model learns via a loss function that incorporates temporal and instance-wise contrast -- the former contrasts representations of the same timestamp while the latter contrasts representations of the same series. To move from semantic- to instance-level representations, TS2Vec repeatedly aggregates its representations and computes this loss over the aggregations. This procedure, termed hierarchical contrasting, encourages the model to learn representations that are durable under aggregation to multiple temporal scales.
+
+\paragraph{Interpretable Representation Learning} The primary disadvantage of these methods is the lack of interpretability: representations are generated by complex nonlinear mappings from raw data to a high-dimensional space. In some cases, the structure of the representation space is simple, but we have no idea why the model learns this structure (e.g. SOM-VAE). In other cases, we get lucky and the structure of the representation space reflects a natural or human-interpretable semantic structure (e.g. word2vec), but we often discover this fact through \textit{post-hoc} analysis: explainability is rarely a consequence of intentional design choices. In general, the representations learned by these methods are sufficiently \textit{rich} to drive downstream tasks, but they are hardly \textit{informative} to humans. This is undesirable because representations generated by a black box preclude any possibility for interpretability downstream, and in many cases, we may wish to use the learned representations to identify meaningful patterns or structures in our original data. 
+
+Interpretability is especially challenging to achieve with multivariate time series because interactions between features over time are rarely discernible to begin with, and this additional complexity also requires more complex models to capture. A useful starting point for designing interpretable models is to consider how humans would reason about the problem. Take for example heart rate data measured by photoplethysmogram (PPG) and classification of atrial fibrillation: physicians often search for patterns such as fluctuating pulse frequency and inconsistent pulse shapes \cite{pereira20-afib}. The human intuition of searching for recognizable morphological patterns embedded within a larger time series suggests an approach involving prototype learning where a model learns representative examples of concepts (prototypes) and reasons by comparing new inputs to these examples. In practice, this reasoning process is implemented as a clustering task within a learned latent space \cite{li26-prototype}. Prototype learning has been successfully applied to CV for classification and segmentation \cite{chen19-protopnet, donnelly21-deformableprotopnet, sacha25-protoseg}, but it is not limited to visual data. In particular, the success of ProtoViT \cite{ma24-protovit} suggests that meaningful prototypes can be learned for sequential data as long as the latent space is defined by an appropriate encoder backbone that accounts for sequentiality (in this case a vision transformer). Conceptually, a prototype-based approach to learning time series representations is most similar to SOM-VAE in the way the latent space is shaped by a discrete set of points, but the learned SOM vertices are not interpretable. 
+
+\paragraph{Dimension Reduction} 
+
+A related but distinct field to representation learning is dimension reduction (DR). While representation learning aims to produce informative (and often high-dimensional) embeddings of raw data that are useful for a variety of downstream tasks, DR is primarily used to generate low-dimensional embeddings for visualization that preserve the geometric and topological structure of data. As a result, DR is not well-suited for the task of representation learning and vice versa. This is especially true with respect to time series where factors such as uneven length, irregular sampling, and temporal dependence complicate the definition of ``distance'' between two series. However, recent advances in DR offer valuable insights into how loss function design affects the geometry of learned embedding spaces. In particular, embedding quality depends on both the notion of similarity that is encoded as well as how the loss allocates attractive and repulsive forces across samples. Well-designed objectives preserve local neighborhoods without sacrificing global organization by balancing attraction to close points with carefully controlled repulsion from farther ones. PaCMAP \cite{wang20-pacmap} shows that applying forces to non-neighbors is key to maintaining this balance and prevents embeddings from collapsing into locally coherent but globally misleading clusters. These insights may be beneficial for broader representation learning objectives: rather than treating all nonpositive pairs as uniformly negative, a contrastive model may benefit from distinguishing truly dissimilar series from samples that are not nonpositive but share some temporal or morphological structure because those intermediate relations help organize the embedding space at a global level. 
+
+% %%%%%%%%% METHODS %%%%%%%%%
+
+\section{Methods}
+\label{sec:methods}
+
+Our overarching goal is to learn fixed-length representations of variable-length, potentially multivariate time series without explicit supervision. These representations need to be sufficiently rich to drive downstream tasks while remaining interpretable -- in particular, we want to be able to understand which morphological and temporal characteristics of the original series are used by the model to shape the representation space. Section \ref{subsec:model} describes our model architecture which implements a multiscale convolutional encoder with sequential prototype layers of different receptive fields to capture local morphological traits as well as global temporal dynamics. Section \ref{subsec:loss} describes our contrastive learning framework which incorporates insights from DR by introducing a third class of contrasting samples separate from positive and negative pairings to organize the representation space. 
+
+\subsection{Model Architecture}
+\label{subsec:model}
+
+Figure [FIGREF] summarizes our model architecture. We use a multiscale convolutional encoder $f$ composed of sequential segments $\mathcal S$ where each segment consists of one or more 1D convolutional layers. Early segments use dense or weakly dilated convolutions to capture local morphological details while deeper segments dilate exponentially to expand the receptive field and encode long-range temporal dynamics. Let $f_{\t_i}^{(i)}$ denote the $i^{\text{th}}$ segment of the convolutional encoder parametrized by $\t_i$, and let $f_{\t_{\text{conv}}}$ denote the entire convolutional encoder parametrized by $\t_{\text{conv}}$ with $L$ segments:
+\begin{align*}
+    f_{\t_{\text{conv}}} = f_{\t_L}^{(L)} \circ \dots \circ f_{\t_2}^{(2)} \circ f_{\t_1}^{(1)}
+\end{align*}
+
+Unlike a standard prototype network with a single prototype layer at the end of the encoder, we insert prototype comparisons between encoder segments. Let $x \in \R^{T \times F}$ be a potentially multivariate time series. Denote the latent embedding after segment $\ell \in \mathcal S$ by $z_\ell(x) \in \R^{T_\ell \times F_\ell}$ where 
+\begin{align*}
+    z_\ell(x) = f_{\t_\ell}^{(\ell)} \circ \dots \circ f_{\t_1}^{(1)}(x)
+\end{align*}
+
+We attach a prototype bank $P_\ell = \{ p_1^{(\ell)}, \dots, p_{M_\ell}^{(\ell)} \}$ after the $\ell^{\text{th}}$ segment where each prototype $p_m^{(\ell)} \in \R^{W_\ell \times F_\ell}$ is a learnable patch in the space of $z_\ell$ with $W_\ell \leq T_\ell$. The shallow prototype banks are intended to capture local morphological patterns, while deeper prototype banks capture longer-range temporal motifs in more contextual latent spaces. This yields a sequential prototype model in which different encoder depths correspond to different temporal scales of explanation.
+
+For each prototype $p_m^{(\ell)}$, we compute its inverted cosine similarity to each patch in $z_\ell(x)$, forming an activation map $a_m^{(\ell)}(x) \in \R^{T_\ell}$. In another deviation from a standard prototype network, we do not perform global max pooling over $a_m^{(\ell)}(x)$. Instead, the model preserves the full activation map of every prototype and learns the final representation from the temporal evolution of these prototype responses. This lets the representation retain information not only about whether a pattern occurs, but also about how prototype evidence is organized across time and across scales. Collecting the activation maps of all prototypes at that depth gives the prototype activation tensor:
+\begin{align*}
+    A^{(\ell)}(x) = 
+    \begin{bmatrix}
+        a_1^{(\ell)}(x) \\ \vdots \\ a_{M_\ell}^{(\ell)}(x)
+    \end{bmatrix}
+    \in \R^{M_\ell \times T_\ell}
+\end{align*}
+
+We reiterate that because deeper prototype layers operate on features with larger receptive fields, activations in later layers already reflect similarity to longer subseries in the original input. Thus, temporal dynamics are represented jointly by the encoder's multiscale receptive fields and by the time-varying prototype activation maps.
+
+For each prototype layer $\ell$, the prototype activation tensor $A^{(\ell)}(x)$ is treated as a multichannel temporal signal whose channels correspond to learned prototypes. We then apply a temporal convolution module $g^{(\ell)}_{\psi}: \R^{M_\ell \times T_\ell} \to \R^{C_\ell \times T_\ell'}$ to the activation tensor where $C_\ell$ is the number of output channels for that layer and $T_\ell'$ is the resulting length. A separate temporal convolution module is used for each prototype layer to accommodate differences in prototype count, temporal resolution, and receptive-field scale across depths. The purpose of this module is to learn temporal patterns over prototype responses. Since the input channels are prototype activation maps, the temporal convolution mixes across both the channel dimension and the temporal dimension. Therefore, each output channel can capture patterns such as co-activation of multiple prototypes, short-range ordering of prototype responses, repeated prototype activity, or scale-specific temporal motifs expressed in the prototype space. Because the convolution operates on prototype maps rather than on uninterpretable hidden features, the resulting temporal features remain grounded in prototype-based evidence. Lastly, to obtain a single-channel output from layer $\ell$, we apply an adaptive pooling operation over the temporal dimension which we denote as $\text{Pool}_\ell: \R^{C_\ell \times T_\ell'} \to \R^{C_\ell}$, yielding 
+\begin{align*}
+    b^{(\ell)}(x) = \left(\text{Pool}_\ell \circ g^{(\ell)}_{\psi} \circ A^{(\ell)}\right) (x)
+\end{align*}
+
+We concatenate the outputs of all prototype layers: 
+\begin{align*}
+    u(x) = \left[ b^{(1)}(x); \ldots; b^{(L)}(x) \right]
+\end{align*}
+
+A linear projection head maps $u(x)$ to the final representation: 
+\begin{align*}
+    h(x) = W u(x) + b
+\end{align*}
+
+\subsection{Contrastive Learning Framework}
+\label{subsec:loss}
+
+\paragraph{Sampling} Let $x^{(i)} \in \R^{T_i \times F}$ denote a potentially multivariate time series and let $x_{\text{anc}}^{(i)}, x_{\text{pos}}^{(i)}, x_{\text{mid}}^{(i)} \subset x^{(i)}$ be temporally contiguous subseries of $x^{(i)}$ where $x_{\text{anc}}^{(i)}$ and $x_{\text{pos}}^{(i)}$ are overlapping and $x_{\text{mid}}^{(i)}$ is distinct from $x_{\text{anc}}^{(i)}$ and $x_{\text{pos}}^{(i)}$. We independently perturb each of these subseries via jittering (prior to encoding) and masking (after the first encoder segment) to produce related contexts $\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{pos}}^{(i)}, \tilde x_{\text{mid}}^{(i)}$. We consider $\tilde x_{\text{anc}}^{(i)}$ to be the anchor, $\tilde x_{\text{pos}}^{(i)}$ the positive example, and $\tilde x_{\text{mid}}^{(i)}$ the mid-near example (i.e. it is less similar to the anchor than an overlapping view, but it is still more related than a sample drawn from a different series). This intermediate relation is inspired by PaCMAP's distinction between neighbors, mid-near points, and further points, which is used there to balance local and global geometric structure. Here, the same idea is adapted to contrastive learning where intermediate pairs are used to improve the model's learned notion of similarity. Negative examples are sampled from other time series in the minibatch during training and denoted $\tilde x_{\text{neg}}^{(i, j)}$ where $j \neq i$ denotes the series from which it was sampled. Note that while examples do not have to be the same length, care must be taken to ensure that the dimensionality of intermediate embeddings is compatible with prototype layers. In this work, all examples within a batch are the same size for code simplicity, but batches themselves are constructed with samples of different lengths to ensure that the model learns robust representations across different series lengths. 
+
+\paragraph{Prototype Learning} The first role of training is to shape the prototype spaces so that related subseries induce similar prototype responses. Because the model preserves the full activation map of each prototype, prototype similarity is defined at the level of these activation tensors rather than only pooled scalar scores. Let $s(x, y)$ be the cosine similarity between vectors $x$ and $y$: 
+\begin{align*}
+    s(x, y) = \frac{\langle x, y \rangle}{\| x \|_2 \| y \|_2}
+\end{align*}
+
+As before, let $A^{(\ell)}(x)$ be the prototype activation tensor of input
+$x$ at layer $\ell$. We define the $\ell$-prototype-space similarity between two series $x$ and $y$ to be the cosine similarity between their flattened prototype activation tensors $\overline A^{(\ell)}(x)$ and $\overline A^{(\ell)}(y)$: 
+\begin{align*}
+    s_{\text{proto}}^{(\ell)}(x, y) = s\left( \overline A^{(\ell)}(x), \overline A^{(\ell)}(y) \right)
+\end{align*}
+
+Two subseries are similar in a prototype space when they induce similar time-varying prototype activation patterns. Using this similarity, we define pair-specific losses for positive, mid-near, and negative relations:
+\begin{align*}
+    \mathcal L_{\text{pos}}(s) = 1 - s,  \qquad \mathcal L_{\text{mid}}(s) = 0.5(1-s), \qquad \mathcal L_{\text{neg}}(s) = \max(0, s - 0.1)
+\end{align*}
+
+Overall, for a training example $x^{(i)}$ from which we sample the anchor $\tilde x_{\text{anc}}^{(i)}$, a positive example $\tilde x_{\text{pos}}^{(i)}$, a mid-near example $\tilde x_{\text{mid}}^{(i)}$, and negative examples $\tilde x_{\text{neg}}^{(i, j)}$ where$j \neq i$ and $N_i$ indexes the minibatch, the loss for layer $\ell$ is
+\begin{align*}
+    \mathcal L_{\text{proto}}^{(\ell)}(x^{(i)}) = \mathcal L_{\text{pos}} \left(s_{\text{proto}}^{(\ell)} \left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{pos}}^{(i)}\right)\right) + \mathcal L_{\text{mid}}\left(s_{\text{proto}}^{(\ell)}\left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{mid}}^{(i)}\right)\right) + \frac{1}{|N_i|} \sum_{j \in N_i} \mathcal L_{\text{neg}}\left(s_{\text{proto}}^{(\ell)}\left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{neg}}^{(i, j)}\right)\right)
+\end{align*}
+
+Because prototypes within the same layer should represent distinct latent components, we additionally include a diversity regularizer that penalizes prototypes that are too similar to one another. This penalty discourages prototype collapse and encourages each prototype bank to span a diverse set of prototypical temporal components. Let $p_a^{(\ell)}$ and $p_b^{(\ell)}$ denote two distinct prototypes in layer $\ell$ (flattened if needed), and define their similarity as the cosine similarity between them:
+\begin{align*}
+    r_{\text{proto}}^{(\ell)}(a, b) = s\left(p_a^{(\ell)}, p_b^{(\ell)}\right)
+\end{align*}
+
+The overall prototype diversity penalty for layer $\ell$ is defined as the average pairwise similarity across all prototypes:
+\begin{align*}
+    \mathcal R_{\text{div}}^{(\ell)} = \frac{1}{M_\ell (M_\ell - 1)} \sum_{a \neq b} \max \left(0, r_{\text{proto}}^{(\ell)}(a, b) - 0.2\right)
+\end{align*}
+
+Over a batch $B$, the objective across all prototype spaces is 
+\begin{align}
+    \mathcal L_{\text{proto}} = \frac{1}{|B|} \sum_{i \in B} \sum_{\ell \in \mathcal S} \mathcal L_{\text{proto}}^{(\ell)}(x^{(i)}) + \lambda_{\text{proto}} \sum_{\ell \in \mathcal S} \mathcal R_{\text{div}}^{(\ell)}
+\end{align}
+
+\paragraph{Representation Learning} After the temporal convolution modules transform the prototype activation maps into fixed-length descriptors, the second role of training is to learn a final representation that preserves the same positive/mid-near/negative ordering. Let $h(x) \in \R^d$ denote the final representation produced by the linear head. We again use cosine similarity: 
+\begin{align*}
+    s_{\text{repr}}(x, y) = s\left(h(x), h(y)\right)
+\end{align*}
+
+In contrast to the prototype-space objective, we use a modified exponential loss to shape the representation space: 
+\begin{align*}
+    \mathcal L_{\text{repr}}(x^{(i)}) = -\log \left[ \frac{\exp \left( s_{\text{repr}} \left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{pos}}^{(i)}\right) \right)}{\exp \left( s_{\text{repr}} \left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{pos}}^{(i)}\right) \right) + \sum_{j \in N_i} \exp \left( s_{\text{repr}} \left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{neg}}^{(i, j)}\right) \right)} \right] + 0.5\left[1 - s_{\text{repr}} \left(\tilde x_{\text{anc}}^{(i)}, \tilde x_{\text{mid}}^{(i)}\right)\right]
+\end{align*}
+
+The exponential loss in the first term is a common choice for contrastive learning (e.g. \cite{eldele21-tstcc,yue21-ts2vec}), and in the vanilla contrastive approach where we only consider positive and negative examples, optimizing this loss maximizes a lower bound on mutual information between paired views \cite{vandenoord19-cpc}. The second term adds a weaker attractive constraint for the mid-near sample rather than treating it as a negative competitor. This modification does not maintain the mutual-information bound for the entire objective, but it preserves the intended geometry of the representation space: positives are pulled together strongly, negatives are contrasted repulsively through the softmax denominator, and mid-near samples are encouraged to remain similar but under a looser constraint.
+
+Since the final representation is generated by a linear layer, we additionally impose $L_1$ regularization on the linear weights to control complexity and discourage over-reliance on a small subset of prototype-derived features. The full representation-space objective over a batch $B$ is therefore 
+\begin{align}
+    \mathcal L_{\text{repr}} = \frac{1}{|B|} \sum_{i \in B} \mathcal L_{\text{repr}}(x^{(i)}) + \lambda_{\text{repr}} \| W \|_1
+\end{align}
+
+We shape the final representation space and the intermediate prototype spaces with different objectives because these stages serve different roles. The intermediate prototype losses are intended to organize the latent spaces around interpretable and diverse prototype activation patterns. This is a more complex structural goal than standard batch discrimination, particularly when a third class of contrasting examples (mid-near samples) are included, and exponential losses are not well-suited for this task due to their emphasis on hard negatives. By contrast, the final representation head is responsible for producing a compact embedding that is globally discriminative within the minibatch. At that stage, an exponential loss is more appropriate.
+
+\subsection{Training}
+\label{subsec:training}
+
+We optimize the model in three stages, following the staged training philosophy of ProtoPNet while adapting it to our contrastive framework. ProtoPNet separates learning a meaningful prototype-structured latent space from optimization of the final layer; we adopt the same idea here, but with unsupervised positive, mid-near, and negative relations rather than labeled classes.
+
+\paragraph{Stage 1} In the first stage, we train the encoder and all prototype banks. This can be understood as a pretraining stage guided by the optimization 
+\begin{align*}
+    \min_{\t_{\text{conv}}, \Phi} \mathcal L_{\text{proto}}
+\end{align*}
+
+where $\Phi = \{P_\ell\}_{\ell \in \mathcal S}$ denotes all prototype parameters. This stage shapes the multiscale latent spaces so that related subseries produce similar prototype activation maps at each prototype depth, while the diversity regularizer encourages each prototype bank to learn a non-redundant set of prototypical temporal components.
+
+\paragraph{Stage 2} In the second stage, we freeze the encoder and prototype layers and train the temporal convolution modules together with the final linear head, guided by the optimization 
+\begin{align*}
+    \min_{\Psi, W, b} \mathcal L_{\text{repr}}
+\end{align*}
+
+where $\Psi = \{\psi^{(\ell)}\}_{\ell \in \mathcal S}$ denotes the parameters of the temporal convolution modules $\{g_{\psi}^{(\ell)}\}_{\ell \in \mathcal S}$. Because prototypes are fixed, this stage learns how to transform and aggregate multiscale prototype activation trajectories into a useful fixed-length representation without altering the prototype structure learned in Stage 1.
+
+\paragraph{Stage 3} In the final stage, we unfreeze the entire network and jointly optimize all parameters:
+\begin{align*}
+    \min_{\t_{\text{conv}}, \{P_\ell\}_{\ell \in \mathcal S}, \Psi, W, b} \mathcal L_{\text{repr}}
+\end{align*}
+
+This final fine-tuning stage allows the encoder, prototypes, temporal readout modules, and linear head to co-adapt while starting from a prototype-structured initialization.
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Representation Quality}
+\label{subsec:qual}
+
+\subsection{Downstream Tasks}
+\label{subsec:downstream}
+
+%Bibliography
+\newpage
+\bibliographystyle{unsrt}  
+\bibliography{references}  
+
+
+\end{document}

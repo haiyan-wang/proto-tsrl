@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: paper.aux
+The style file: unsrt.bst
+Database file #1: references.bib
+Warning--empty chapter and pages in franceschi19-timesampling
+Warning--empty chapter and pages in chen19-protopnet
+You've used 30 entries,
+            1791 wiz_defined-function locations,
+            618 strings with 10659 characters,
+and the built_in function-call counts, 8503 in all, are:
+= -- 697
+> -- 490
+< -- 11
++ -- 172
+- -- 142
+* -- 570
+:= -- 1286
+add.period$ -- 94
+call.type$ -- 30
+change.case$ -- 28
+chr.to.int$ -- 0
+cite$ -- 32
+duplicate$ -- 391
+empty$ -- 813
+format.name$ -- 142
+if$ -- 1979
+int.to.chr$ -- 0
+int.to.str$ -- 30
+missing$ -- 25
+newline$ -- 147
+num.names$ -- 36
+pop$ -- 145
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 231
+stack$ -- 0
+substring$ -- 436
+swap$ -- 140
+text.length$ -- 11
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 60
+width$ -- 32
+write$ -- 330
+(There were 2 warnings)
