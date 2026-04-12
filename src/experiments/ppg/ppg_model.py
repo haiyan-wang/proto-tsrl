@@ -1,5 +1,5 @@
-from code.models.resblock import ResidualBlock
-from code.models.prototypelayer import PrototypeLayer
+from src.models.resblock import ResidualBlock
+from src.models.prototypelayer import PrototypeLayer
 
 import torch
 import torch.nn as nn
