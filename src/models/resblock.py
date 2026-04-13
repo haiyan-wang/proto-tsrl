@@ -80,8 +80,17 @@ class ResidualBlock(nn.Module):
             if missing:
                 raise ValueError(f"Layer config at index {i} is missing required keys: {missing}")
 
+            cfg = cfg.copy()
             in_ch = cfg["in_channels"]
             out_ch = cfg["out_channels"]
+
+            if "padding" not in cfg:
+                k = cfg["kernel_size"]
+                d = cfg.get("dilation", 1)
+
+                if isinstance(k, tuple):
+                    raise ValueError("This ResidualBlock expects Conv1d kernel_size to be an int.")
+                cfg["padding"] = d * (k - 1) // 2
 
             conv = nn.Conv1d(**cfg)
 
