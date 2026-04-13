@@ -20,7 +20,7 @@ class TimeSeriesDataset(Dataset):
         return len(self.series_list)
 
     def __getitem__(self, idx):
-        return self.series_list[idx]
+        return torch.as_tensor(self.series_list[idx], dtype = torch.float32)
 
 def _sample_crop(x, L):
     """
