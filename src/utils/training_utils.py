@@ -870,7 +870,4 @@ def run_training(
 
             global_epoch += 1
 
-    if checkpoint_path is not None:
-        _save_checkpoint(model, checkpoint_path)
-
     return history
