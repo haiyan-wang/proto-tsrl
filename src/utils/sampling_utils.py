@@ -6,21 +6,22 @@ from torch.utils.data import Dataset, DataLoader
 
 class TimeSeriesDataset(Dataset):
     """
-    Dataset for time series data. 
-    
-    Expects a list of tensors, each of shape [T_i, F]. 
+    Dataset for time series data.
 
-    Returns a single time series tensor per item, without cropping.
+    Expects a list of array-like objects, each of shape [T_i] or [T_i, F].
+
+    Returns a single time series tensor per item.
     """
 
     def __init__(self, series_list):
-        self.series_list = series_list  # list of tensors [T_i, F]
+        self.series_list = [torch.as_tensor(x, dtype=torch.float32) for x in series_list]
 
     def __len__(self):
         return len(self.series_list)
 
     def __getitem__(self, idx):
-        return torch.as_tensor(self.series_list[idx], dtype = torch.float32)
+        x = self.series_list[idx]
+        return x.unsqueeze(-1) if x.ndim == 1 else x
 
 def _sample_crop(x, L):
     """
