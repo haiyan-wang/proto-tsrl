@@ -7,7 +7,6 @@ import torch.nn.functional as F
 
 
 
-Tensor = torch.Tensor
 Batch = Union[Dict[str, Any], Tuple[Any, ...], List[Any]]
 
 # ============================================================
@@ -43,8 +42,8 @@ def _move_to_device(
 
 def _extended_forward(
         model: nn.Module, 
-        x: Tensor
-    ) -> Dict[str, Tensor]:
+        x: torch.Tensor
+    ) -> Dict[str, torch.Tensor]:
     """
     Forward pass retaining intermediate tensors for staged training losses.
 
@@ -126,10 +125,10 @@ def _extended_forward(
 # ============================================================
 
 def _rowise_cos_sim(
-        x: Tensor, 
-        y: Tensor, 
+        x: torch.Tensor, 
+        y: torch.Tensor, 
         eps: float = 1e-8
-    ) -> Tensor:
+    ) -> torch.Tensor:
     """
     Cosine similarity row-wise after flattening all non-batch dimensions.
     Returns shape: (batch,)
@@ -143,10 +142,10 @@ def _rowise_cos_sim(
     return torch.sum(x * y, dim = 1)
 
 def _pairwise_cos_sim(
-        x: Tensor, 
-        y: Tensor, 
+        x: torch.Tensor, 
+        y: torch.Tensor, 
         eps: float = 1e-8
-    ) -> Tensor:
+    ) -> torch.Tensor:
     """
     Pairwise cosine similarity between rows of x and y.
     x: (B, D), y: (B, D) -> (B, B)
@@ -164,12 +163,12 @@ def _pairwise_cos_sim(
 # ============================================================
 
 def _prototype_contrastive_loss(
-        s_pos: Tensor, 
-        s_mid: Tensor, 
-        s_neg: Tensor, 
+        s_pos: torch.Tensor, 
+        s_mid: torch.Tensor, 
+        s_neg: torch.Tensor, 
         mid_weight: float = 0.5,
         neg_margin: float = 0.1
-    ) -> Tensor:
+    ) -> torch.Tensor:
     """
     Implements the prototype-space pair losses described in the draft:
         - L_pos(s) = 1 - s
@@ -192,10 +191,10 @@ def _prototype_contrastive_loss(
     return l_pos + l_mid + l_neg
 
 def _prototype_diversity_regularizer(
-        prototype_vectors: Tensor, 
+        prototype_vectors: torch.Tensor, 
         threshold: float = 0.2, 
         eps: float = 1e-8
-    ) -> Tensor:
+    ) -> torch.Tensor:
     """
     Average pairwise prototype similarity penalty within a prototype bank.
         - prototype_vectors shape: (n_prototypes, channels, length)
@@ -218,13 +217,13 @@ def _prototype_diversity_regularizer(
 # ============================================================
 
 def _representation_contrastive_loss(
-        anc_repr: Tensor, 
-        pos_repr: Tensor, 
-        mid_repr: Tensor, 
-        neg_repr: Tensor, 
+        anc_repr: torch.Tensor, 
+        pos_repr: torch.Tensor, 
+        mid_repr: torch.Tensor, 
+        neg_repr: torch.Tensor, 
         temperature: float = 1.0, 
         eps: float = 1e-8
-    ) -> Dict[str, Tensor]:
+    ) -> Dict[str, torch.Tensor]:
     """
     Representation-space loss.
     
@@ -267,16 +266,16 @@ def _representation_contrastive_loss(
 
 def _stage1_loss(
         model : nn.Module,
-        anc_out : Dict[str, Tensor],
-        pos_out : Dict[str, Tensor],
-        mid_out : Dict[str, Tensor],
-        neg_out : Dict[str, Tensor],
+        anc_out : Dict[str, torch.Tensor],
+        pos_out : Dict[str, torch.Tensor],
+        mid_out : Dict[str, torch.Tensor],
+        neg_out : Dict[str, torch.Tensor],
         mid_weight : float = 0.5,
         neg_margin : float = 0.1,
         diversity_threshold : float = 0.2,
         lambda_proto : float = 1.0,
         eps : float = 1e-8
-    ) -> Dict[str, Tensor]:
+    ) -> Dict[str, torch.Tensor]:
     """
     Stage 1 prototype-space loss.
 
@@ -341,14 +340,14 @@ def _stage1_loss(
 
 def _stage23_loss(
         model : nn.Module,
-        anc_out : Dict[str, Tensor],
-        pos_out : Dict[str, Tensor],
-        mid_out : Dict[str, Tensor],
-        neg_out : Dict[str, Tensor],
+        anc_out : Dict[str, torch.Tensor],
+        pos_out : Dict[str, torch.Tensor],
+        mid_out : Dict[str, torch.Tensor],
+        neg_out : Dict[str, torch.Tensor],
         temperature : float = 1.0,
         lambda_repr : float = 1.0,
         eps : float = 1e-8
-    ) -> Dict[str, Tensor]:
+    ) -> Dict[str, torch.Tensor]:
     """
     Stage 2 / Stage 3 representation-space loss.
 
@@ -477,11 +476,11 @@ class CollectorPayload:
     epoch : int
     batch_index : int
     is_train : bool
-    anc_out : Dict[str, Tensor]
-    pos_out : Dict[str, Tensor]
-    mid_out : Dict[str, Tensor]
-    neg_out : Dict[str, Tensor]
-    loss_dict : Dict[str, Tensor]
+    anc_out : Dict[str, torch.Tensor]
+    pos_out : Dict[str, torch.Tensor]
+    mid_out : Dict[str, torch.Tensor]
+    neg_out : Dict[str, torch.Tensor]
+    loss_dict : Dict[str, torch.Tensor]
     batch : Optional[Dict[str, Any]] = None
 
 def _collect_training_state(
@@ -490,11 +489,11 @@ def _collect_training_state(
         epoch : int,
         batch_index : int,
         is_train : bool,
-        anc_out : Dict[str, Tensor],
-        pos_out : Dict[str, Tensor],
-        mid_out : Dict[str, Tensor],
-        neg_out : Dict[str, Tensor],
-        loss_dict : Dict[str, Tensor],
+        anc_out : Dict[str, torch.Tensor],
+        pos_out : Dict[str, torch.Tensor],
+        mid_out : Dict[str, torch.Tensor],
+        neg_out : Dict[str, torch.Tensor],
+        loss_dict : Dict[str, torch.Tensor],
         batch : Optional[Dict[str, Any]] = None,
     ) -> None:
     """
