@@ -751,7 +751,7 @@ def _evaluate_wrapper(
 # Training orchestration
 # ============================================================
 
-def save_checkpoint(model: nn.Module, path: str) -> None:
+def _save_checkpoint(model: nn.Module, path: str) -> None:
     state_dict = _unwrap_model(model).state_dict()
     torch.save(state_dict, path)
 
@@ -794,7 +794,7 @@ def run_training(
     history: List[Dict[str, Any]] = []
 
     stage_plan = [("stage1", epochs_stage1), ("stage2", epochs_stage2), ("stage3", epochs_stage3)]
-    global_epoch = 0
+    global_epoch = 1
     total_epochs = epochs_stage1 + epochs_stage2 + epochs_stage3
     print(f"Training for {total_epochs} epochs.")
 
@@ -805,7 +805,7 @@ def run_training(
         print(f"\n=== {stage_name} ({n_epochs} epochs) ===")
 
         for local_epoch in range(n_epochs):
-            print(f"[{stage_name}] epoch {local_epoch + 1}/{n_epochs} | global {global_epoch + 1}/{total_epochs}")
+            print(f"[{stage_name}] epoch {local_epoch + 1}/{n_epochs} | global {global_epoch}/{total_epochs}")
 
             train_metrics = _train_wrapper(
                 model = model,
@@ -863,14 +863,14 @@ def run_training(
             print(msg)
 
             if checkpoint_epochs is not None and global_epoch in set(checkpoint_epochs):
-                checkpoint_file = f"{checkpoint_path}_epoch{global_epoch}.pt" if checkpoint_path else None
+                checkpoint_file = f"{checkpoint_path}/prototsrl_epoch{global_epoch}.pt" if checkpoint_path else None
                 if checkpoint_file:
-                    save_checkpoint(model, checkpoint_file)
-                    print(f"Saved checkpoint at epoch {global_epoch} to {checkpoint_file}")
+                    _save_checkpoint(model, checkpoint_file)
+                    print(f"Saved checkpoint at epoch {global_epoch}")
 
             global_epoch += 1
 
     if checkpoint_path is not None:
-        save_checkpoint(model, checkpoint_path)
+        _save_checkpoint(model, checkpoint_path)
 
     return history

@@ -22,7 +22,7 @@ class TimeSeriesDataset(Dataset):
     def __getitem__(self, idx):
         return self.series_list[idx]
 
-def sample_crop(x, L):
+def _sample_crop(x, L):
     """
     Return a contiguous subseries of length x from a time series tensor.
 
@@ -36,7 +36,7 @@ def sample_crop(x, L):
 
     return x[start:start+L], start
 
-def sample_overlapping_pair(x, L, min_overlap = 0.3):
+def _sample_overlapping_pair(x, L, min_overlap = 0.3):
     """
     Sample two length L contiguous crops from x with at least min_overlap fraction overlap.
 
@@ -47,7 +47,7 @@ def sample_overlapping_pair(x, L, min_overlap = 0.3):
     """
 
     T = x.size(0)
-    a, s1 = sample_crop(x, L)
+    a, s1 = _sample_crop(x, L)
     min_ov = max(1, int(L * min_overlap))
 
     l = max(0, s1 - (L - min_ov))
@@ -57,7 +57,7 @@ def sample_overlapping_pair(x, L, min_overlap = 0.3):
 
     return a, p
 
-def sample_nonoverlap(x, L, forbidden_start):
+def _sample_nonoverlap(x, L, forbidden_start):
     """
     Sample a length L contiguous crop from x that does not overlap the crop starting at forbidden_start
 
@@ -76,7 +76,7 @@ def sample_nonoverlap(x, L, forbidden_start):
     
     return x[s:s+L]
 
-def jitter(x, var):
+def _jitter(x, var):
     """
     Add zero-mean Gaussian noise to x with variance var.
 
@@ -90,7 +90,15 @@ def jitter(x, var):
     
     return x + noise
 
-def contrastive_collate(batch, min_len, max_len, num_neg = 4, min_var = 0, max_var = 0):
+def contrastive_collate(
+        batch, 
+        min_len, 
+        max_len, 
+        num_neg = 4, 
+        min_overlap = 0.3, 
+        min_var = 0, 
+        max_var = 0
+    ):
     """
     Build a batch of anchor, positive, mid, and per-sample negative crops using one shared crop length sampled for the batch.
 
@@ -125,19 +133,19 @@ def contrastive_collate(batch, min_len, max_len, num_neg = 4, min_var = 0, max_v
     anchors, positives, mids, negatives = [], [], [], []
 
     for i, x in enumerate(batch):
-        anchor, anchor_start = sample_crop(x, L)
-        anchor = jitter(anchor, jitter_var)
-        _, positive = sample_overlapping_pair(x, L)
-        positive = jitter(positive, jitter_var)
-        mid = sample_nonoverlap(x, L, anchor_start)
-        mid = jitter(mid, jitter_var)
+        anchor, anchor_start = _sample_crop(x, L)
+        anchor = _jitter(anchor, jitter_var)
+        _, positive = _sample_overlapping_pair(x, L, min_overlap = min_overlap)
+        positive = _jitter(positive, jitter_var)
+        mid = _sample_nonoverlap(x, L, anchor_start)
+        mid = _jitter(mid, jitter_var)
 
         other_ids = [j for j in range(len(batch)) if j != i]
         negs = []
         for _ in range(num_neg):
             j = random.choice(other_ids)
-            neg, _ = sample_crop(batch[j], L)
-            neg = jitter(neg, jitter_var)
+            neg, _ = _sample_crop(batch[j], L)
+            neg = _jitter(neg, jitter_var)
             negs.append(neg.transpose(0, 1))   # [F, L]
 
         anchors.append(anchor.transpose(0, 1))      # [F, L]
@@ -166,7 +174,10 @@ collate_fn = functools.partial(
     contrastive_collate,
     min_len = 128,
     max_len = 256,
-    num_neg = 4
+    num_neg = 4, 
+    min_overlap = 0.3, 
+    min_var = 0.5, 
+    max_var = 2
 )
 
 loader = DataLoader(
@@ -178,10 +189,10 @@ loader = DataLoader(
 )
 
 for batch in loader:
-    anchor = batch["anchor"]      # [B, L, F]
-    positive = batch["positive"]  # [B, L, F]
-    mid = batch["mid"]            # [B, L, F]
-    negative = batch["negative"]  # [B, K, L, F]
+    anchor = batch["anchor"]      # [B, F, L]
+    positive = batch["positive"]  # [B, F, L]
+    mid = batch["mid"]            # [B, F, L]
+    negative = batch["negative"]  # [B, K, F, L]
     L = batch["length"]
 
     # pass to model / loss
