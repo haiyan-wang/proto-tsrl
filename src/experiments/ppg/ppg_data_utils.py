@@ -36,7 +36,7 @@ def load_data(
         - y: (N,) ndarray of binary labels indicating presence of afib if return_labels = True
     """
 
-    with np.load(file_path + f'{dataset}.npz') as data:
+    with np.load(f'{file_path}/{dataset}.npz') as data:
         ppg_signal = data['signal']
         ppg_qual = data['qa_label']
         rhythm = data['rhythm']
@@ -132,17 +132,14 @@ def make_dataloaders(
         drop_last = True
     )
 
-    if val_ratio:
-        dl_val = DataLoader(
-            ds_val,
-            batch_size = batch_size,
-            shuffle = False,
-            collate_fn = collate_fn,
-            num_workers = num_workers,
-            pin_memory = True,
-            drop_last = True
-        )
+    dl_val = DataLoader(
+        ds_val,
+        batch_size = batch_size,
+        shuffle = False,
+        collate_fn = collate_fn,
+        num_workers = num_workers,
+        pin_memory = True,
+        drop_last = True
+    )
 
-        return dl, dl_val
-
-    return dl
+    return dl, dl_val
