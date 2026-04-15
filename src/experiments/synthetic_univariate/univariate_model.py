@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 
 
-class PPGModel(nn.Module):
+class UnivariateModel(nn.Module):
 
     def __init__(self, representation_dimension, mask_probability = 0.2):
 
