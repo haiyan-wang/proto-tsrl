@@ -74,7 +74,7 @@ class UnivariateModel(nn.Module):
             ),
             ResidualBlock(
                 layer_configs = [
-                    {'in_channels' : 50, 'out_channels' : 50, 'kernel_size' : 5},
+                    {'in_channels' : 50, 'out_channels' : 100, 'kernel_size' : 5},
                     {'in_channels' : 100, 'out_channels' : 100, 'kernel_size' : 5}
                 ]
             )
@@ -122,7 +122,7 @@ class UnivariateModel(nn.Module):
             ),
             ResidualBlock(
                 layer_configs = [
-                    {'in_channels' : 50, 'out_channels' : 50, 'kernel_size' : 5},
+                    {'in_channels' : 50, 'out_channels' : 100, 'kernel_size' : 5},
                     {'in_channels' : 100, 'out_channels' : 100, 'kernel_size' : 5}
                 ]
             )
@@ -158,7 +158,7 @@ class UnivariateModel(nn.Module):
             ),
             ResidualBlock(
                 layer_configs = [
-                    {'in_channels' : 50, 'out_channels' : 50, 'kernel_size' : 5},
+                    {'in_channels' : 50, 'out_channels' : 100, 'kernel_size' : 5},
                     {'in_channels' : 100, 'out_channels' : 100, 'kernel_size' : 5}
                 ]
             )
