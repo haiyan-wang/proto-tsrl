@@ -831,7 +831,7 @@ def run_training(
                     dataloader = val_loader,
                     device = device,
                     stage = stage_name,
-                    mid_weight = 0.5,
+                    mid_weight = mid_weight,
                     proto_neg_margin = proto_neg_margin,
                     proto_diversity_threshold = proto_diversity_threshold,
                     lambda_proto = lambda_proto,
