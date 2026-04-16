@@ -33,7 +33,7 @@
 % \fancyhead[RE]{Firstauthor and Secondauthor} % Firstauthor et al. if more than 2 - must use \documentclass[twoside]{article}
 
 %% UPDATE TITLE
-\title{Interpretable Representation Learning for Time Series}
+\title{ProtoTSRL: Interpretable Time Series Representation Learning}
 \author{
     Haiyan Wang \\
     Duke University \\
@@ -56,10 +56,10 @@
 
 Time series are prevalent across a wide range of domains and often drive decisionmaking in high-stakes environments including health monitoring, weather forecasting, and financial modeling. However, time series data pose significant challenges for human interpretability due to their high dimensionality with respect to both the length of the series and the number of features in each observation. Moreover, real-world time series data often present with irregularities such as temporal misalignment, uneven lengths, and variable sampling frequencies which can further obfuscate important structure. As a result, time series data are often sparsely labeled, and it is infeasible to annotate large datasets to the extent required for supervised modeling. The ability to learn fixed-length representations of time series without explicit supervision that differentiate relevant patterns from nuisance variation is important for both identifying latent structure within time series data as well as for downstream tasks such as classification and forecasting. 
 
-In this paper, we propose a new approach to learning informative, general-purpose representations of time series that is both \textit{interpretable} and \textit{domain-agnostic}. Our primary contributions are: 
+In this paper, we propose ProtoTSRL, a new approach to learning informative, general-purpose representations of time series that is both \textit{interpretable} and \textit{domain-agnostic}. Our primary contributions are: 
 \begin{itemize}
     \item A contrastive learning framework that incorporates insights from dimension reduction algorithms by introducing a third class of contrasting samples separate from positive and negative pairings. Unlike previous approaches, contrastive samples are created with both sampling- and augmentation-based methods and do not rely on domain-specific assumptions such as local smoothness.
-    \item A novel architecture that employs multiscale prototype-based learning to capture both local morphological traits and global temporal dynamics. 
+    \item A novel architecture that employs multiscale prototype-based learning to capture both local morphological traits and global temporal dynamics. The proposed architecture can be trained in stages, allowing us to shape semantic intermediate latent spaces which are then used to learn final representations.
 \end{itemize}
 
 % %%%%%%%%% RELATED WORK %%%%%%%%%
@@ -93,7 +93,14 @@ Our overarching goal is to learn fixed-length representations of variable-length
 \subsection{Model Architecture}
 \label{subsec:model}
 
-Figure [FIGREF] summarizes our model architecture. We use a multiscale convolutional encoder $f$ composed of sequential segments $\mathcal S$ where each segment consists of one or more 1D convolutional layers. Early segments use dense or weakly dilated convolutions to capture local morphological details while deeper segments dilate exponentially to expand the receptive field and encode long-range temporal dynamics. Let $f_{\t_i}^{(i)}$ denote the $i^{\text{th}}$ segment of the convolutional encoder parametrized by $\t_i$, and let $f_{\t_{\text{conv}}}$ denote the entire convolutional encoder parametrized by $\t_{\text{conv}}$ with $L$ segments:
+\begin{figure}
+    \centering
+    \includegraphics[width = \textwidth]{arch2.jpg}
+    \caption{Generic ProtoTSRL architecture.}
+    \label{fig:arch}
+\end{figure}
+
+Figure \ref{fig:arch} summarizes our model architecture. We use a multiscale convolutional encoder $f$ composed of sequential segments $\mathcal S$ where each segment consists of one or more 1D convolutional layers. Early segments use dense or weakly dilated convolutions to capture local morphological details while deeper segments dilate exponentially to expand the receptive field and encode long-range temporal dynamics. Let $f_{\t_i}^{(i)}$ denote the $i^{\text{th}}$ segment of the convolutional encoder parametrized by $\t_i$, and let $f_{\t_{\text{conv}}}$ denote the entire convolutional encoder parametrized by $\t_{\text{conv}}$ with $L$ segments:
 \begin{align*}
     f_{\t_{\text{conv}}} = f_{\t_L}^{(L)} \circ \dots \circ f_{\t_2}^{(2)} \circ f_{\t_1}^{(1)}
 \end{align*}
@@ -220,12 +227,33 @@ This final fine-tuning stage allows the encoder, prototypes, temporal readout mo
 \section{Experiments}
 \label{sec:experiments}
 
+We train instances of ProtoTSRL on several sets of univariate time series and evaluate the model's training dynamics and the quality of the learned representations. The geometry of the representation space can be visualized with dimension reduction (we use PaCMAP), and representation quality is evaluated with classification-based downstream tasks. 
+
 \subsection{Synthetic Time Series}
 \label{subsec:synthetic_univariate}
 
-In this section, we create several synthetic datasets to test the model's ability to represent important characteristics of time series such as periodicity and stationarity. Each dataset consists of time series simulated by  To evaluate the learned representations, we fit a multilayer perceptron 
+In this section, we create several synthetic datasets to test the model's ability to represent and distinguish broadly important characteristics of time series such as periodicity, stationarity, and temporal dependence. Each dataset consists of variable-length time series simulated by one of several user-defined generative processes. To ensure sufficient diversity within the generated data, we add small perturbations to the parameters of each generative process so that each sample is parametrized slightly differently but still clearly belongs to a specific class. To evaluate the learned representations, we fit several models of varying complexity to recover the label of the original generative process.
+
+\paragraph{Periodic Series} This dataset consists of periodic (sinusoidal) series. The data generative process is determined by two components: wave parameters (frequency, amplitude, vertical shifts, phase shifts, drift) and noise parameters (amplitude jittering, frequency jittering, additive Gaussan noise, baseline wander). We generate five classes: (1) base sine wave, (2) base sine wave with different frequency and amplitude, (3) sine wave with positive linear drift, (4) sine wave with negative linear drift, (5) sine wave with positive vertical shift. The same noise parameters are applied to all 5 classes. Examples of a generated series from each class are shown in Figure \ref{fig:periodic_univariate_examples}.
+
+\begin{figure}
+    \centering 
+    \includegraphics[width = 0.8\textwidth]{periodic1.png} \\
+    \includegraphics[width = 0.8\textwidth]{periodic2.png} \\
+    \includegraphics[width = 0.4\textwidth]{periodic3.png}
+    \caption{Example series from each class of periodic series.}
+    \label{fig:periodic_univariate_examples}
+\end{figure}
+
+ProtoTSRL is trained on this dataset to generate representations with 300 features. We first analyze the evolution of the learned prototype spaces throughout training via the average pairwise similarity between prototypes in each layer. 
+
+\paragraph{Autoregressive Series}
 
 \subsection{Atrial Fibrillation Detection in PPG Signal}
+
+\section{Discussion}
+\label{sec:discussion}
+
 
 
 %Bibliography

@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex paper"] 1776292451.31 "paper.aux" "paper.bbl" "paper" 1776292608.18704 0
+["bibtex paper"] 1776331258.36187 "paper.aux" "paper.bbl" "paper" 1776331754.52049 0
   "./references.bib" 1775760071.44783 16479 e81553f7bb52b58495bd8595fc6d53b3 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "paper.aux" 1776292607.99666 4870 6ef9a9c5d2faf890eea9ebeacf28490d "pdflatex"
+  "paper.aux" 1776331754.27524 5833 9cc4b14e6a5937113cf071438b29ab5f "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1776292607.48686 "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" "paper.pdf" "paper" 1776292608.18715 0
-  "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" 1776292607.29096 31948 ca68d7145c8f9253b4af8b2d24d6ab17 ""
+["pdflatex"] 1776331753.01972 "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" "paper.pdf" "paper" 1776331754.52075 0
+  "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" 1776331752.77814 34443 28daeba3ba99df7fa73e40c32c0bf51b ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -125,10 +125,14 @@
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727256956 8221424 a6a255716cb34a974ac1e582bd4d7747 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "PRIMEarxiv.sty" 1774507032.52482 7647 257f5f0b6c90ec491e05bd461066ae66 ""
-  "paper.aux" 1776292607.99666 4870 6ef9a9c5d2faf890eea9ebeacf28490d "pdflatex"
-  "paper.bbl" 1776292451.38569 8564 84813f1abf9be92fe04bcddb61801b72 "bibtex paper"
-  "paper.out" 1776292607.99715 1300 97fe7debe8a276deb4e0a76a8d1c4209 "pdflatex"
-  "paper.tex" 1776292607.29096 31948 ca68d7145c8f9253b4af8b2d24d6ab17 ""
+  "figures/arch2.jpg" 1776330242.09804 45503 7ecf069d6c3133f43e82903c4033383b ""
+  "figures/periodic1.png" 1776331126.87024 136216 a279db735e98ebe90080dc47c427e3e3 ""
+  "figures/periodic2.png" 1776331135.41759 116855 78775efd11ff46f262999e9233096e53 ""
+  "figures/periodic3.png" 1776331138.87564 63396 7420f82f41a69e34039ae3a3d5707eac ""
+  "paper.aux" 1776331754.27524 5833 9cc4b14e6a5937113cf071438b29ab5f "pdflatex"
+  "paper.bbl" 1776331258.44169 8564 84813f1abf9be92fe04bcddb61801b72 "bibtex paper"
+  "paper.out" 1776331754.27598 1394 9016f977bc8ed0089778a2f6b29c341f "pdflatex"
+  "paper.tex" 1776331752.77814 34443 28daeba3ba99df7fa73e40c32c0bf51b ""
   (generated)
   "paper.aux"
   "paper.log"
