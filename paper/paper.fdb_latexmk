@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex paper"] 1776337246.26762 "paper.aux" "paper.bbl" "paper" 1776337357.10948 0
+["bibtex paper"] 1776337664.87388 "paper.aux" "paper.bbl" "paper" 1776337666.66128 0
   "./references.bib" 1775760071.44783 16479 e81553f7bb52b58495bd8595fc6d53b3 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "paper.aux" 1776337356.84299 7716 eb4534756c84d26f054c07b878ebb116 "pdflatex"
+  "paper.aux" 1776337666.44843 7687 0ca7b12b4f6cc001d87cac97fcc7a146 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1776337355.07838 "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" "paper.pdf" "paper" 1776337357.10965 0
-  "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" 1776337354.56718 40637 d07aca1da3e2b83405f3089e357444e7 ""
+["pdflatex"] 1776337664.95083 "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" "paper.pdf" "paper" 1776337666.66143 0
+  "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" 1776337662.90316 40595 08f78cb91ae673c835c3e4aa8953993c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -143,10 +143,10 @@
   "figures/periodic_univariate_dynamics.png" 1776333431.0649 47753 dc30063b6061578cb5c927ddfb4d1656 ""
   "figures/periodic_univariate_pacmap2d.png" 1776323884.2963 123517 67c6e317cffac4ae39e6cd9a2eb332ea ""
   "figures/periodic_univariate_pacmap3d.png" 1776323877.02416 294004 2014d32767bec52dea9a13839ce7e40b ""
-  "paper.aux" 1776337356.84299 7716 eb4534756c84d26f054c07b878ebb116 "pdflatex"
-  "paper.bbl" 1776337246.34043 8564 84813f1abf9be92fe04bcddb61801b72 "bibtex paper"
-  "paper.out" 1776337356.84389 1394 9016f977bc8ed0089778a2f6b29c341f "pdflatex"
-  "paper.tex" 1776337354.56718 40637 d07aca1da3e2b83405f3089e357444e7 ""
+  "paper.aux" 1776337666.44843 7687 0ca7b12b4f6cc001d87cac97fcc7a146 "pdflatex"
+  "paper.bbl" 1776337664.94877 8564 84813f1abf9be92fe04bcddb61801b72 "bibtex paper"
+  "paper.out" 1776337666.44928 1222 8da237dc0eef4a7701b6c390c3e8b4ee "pdflatex"
+  "paper.tex" 1776337662.90316 40595 08f78cb91ae673c835c3e4aa8953993c ""
   (generated)
   "paper.aux"
   "paper.log"

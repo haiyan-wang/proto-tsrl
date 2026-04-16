@@ -238,9 +238,9 @@ In this section, we create several synthetic datasets to test the model's abilit
 
 \begin{figure}
     \centering 
-    \includegraphics[width = 0.8\textwidth]{periodic1.png} \\
-    \includegraphics[width = 0.8\textwidth]{periodic2.png} \\
-    \includegraphics[width = 0.4\textwidth]{periodic3.png}
+    \includegraphics[width = \textwidth]{periodic1.png} \\
+    \includegraphics[width = \textwidth]{periodic2.png} \\
+    \includegraphics[width = 0.5\textwidth]{periodic3.png}
     \caption{Example series from each class of periodic series.}
     \label{fig:periodic_univariate_examples}
 \end{figure}
@@ -249,7 +249,7 @@ In this section, we create several synthetic datasets to test the model's abilit
 
 \begin{figure}
     \centering 
-    \includegraphics[width = 0.5\textwidth]{periodic_univariate_dynamics.png}
+    \includegraphics[width = 0.6\textwidth]{periodic_univariate_dynamics.png}
     \caption{Average pairwise prototype similarity by layer.}
     \label{fig:periodic_univariate_dynamics}
 \end{figure}
@@ -287,8 +287,8 @@ Lastly, we evaluate representation quality with a classification-based downstrea
 
 \begin{figure}
     \centering 
-    \includegraphics[width = 0.9\textwidth]{autoregressive1.png} \\
-    \includegraphics[width = 0.45\textwidth]{autoregressive2.png}
+    \includegraphics[width = \textwidth]{autoregressive1.png} \\
+    \includegraphics[width = 0.5\textwidth]{autoregressive2.png}
     \caption{Example series from each class of autoregressive series.}
     \label{fig:autoregressive_univariate_examples}
 \end{figure}
@@ -302,7 +302,7 @@ where $\epsilon \sim N(0, \sigma^2)$. Each generative process is determined by t
 
 \begin{figure}
     \centering
-    \includegraphics[width = 0.5\textwidth]{autoregressive_univariate_dynamics.png}
+    \includegraphics[width = 0.6\textwidth]{autoregressive_univariate_dynamics.png}
     \caption{Average pairwise prototype similarity by layer.}
     \label{fig:autoregressive_univariate_dynamics}
 \end{figure}
@@ -319,7 +319,7 @@ Prototype similarities at each layer are shown in Figure \ref{fig:autoregressive
 
 PaCMAP embeddings of autoregressive series representations in two and three dimensions are shown in Figure \ref{fig:autoregression_pacmap}. From this result, it seems ProtoTSRL is exceptionally good at learning to recognize temporal dependence structure as the representation space achieves perfect separation. This is reflected in downstream tasks as well: every model achieved perfect accuracy when predicting which autoregression generated each representation.
 
-\subsection{Atrial Fibrillation Detection in PPG Signal} 
+\subsection{PPG Signals} 
 
 \section{Discussion}
 \label{sec:discussion}
