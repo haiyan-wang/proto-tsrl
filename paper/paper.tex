@@ -18,6 +18,8 @@
 \graphicspath{{figures/}}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage[table]{xcolor}
+\usepackage{array}
 
 % NOTATION 
 \newcommand{\R}{\mathbb R}
@@ -227,14 +229,14 @@ This final fine-tuning stage allows the encoder, prototypes, temporal readout mo
 \section{Experiments}
 \label{sec:experiments}
 
-We train instances of ProtoTSRL on several sets of univariate time series and evaluate the model's training dynamics and the quality of the learned representations. The geometry of the representation space can be visualized with dimension reduction (we use PaCMAP), and representation quality is evaluated with classification-based downstream tasks. 
+We train ProtoTSRL on several sets of univariate time series and evaluate the model's training dynamics and the quality of the learned representations. The geometry of the representation space can be visualized with DR (we use PaCMAP), and representation quality is evaluated with classification-based downstream tasks. 
 
 \subsection{Synthetic Time Series}
 \label{subsec:synthetic_univariate}
 
-In this section, we create several synthetic datasets to test the model's ability to represent and distinguish broadly important characteristics of time series such as periodicity, stationarity, and temporal dependence. Each dataset consists of variable-length time series simulated by one of several user-defined generative processes. To ensure sufficient diversity within the generated data, we add small perturbations to the parameters of each generative process so that each sample is parametrized slightly differently but still clearly belongs to a specific class. To evaluate the learned representations, we fit several models of varying complexity to recover the label of the original generative process.
+In this section, we create several synthetic datasets to test the model's ability to represent and distinguish broadly important characteristics of time series such as periodicity, stationarity, and temporal dependence. Each dataset consists of variable-length time series simulated by one of several user-defined generative processes. To ensure sufficient diversity within the generated data, we add small perturbations to the parameters of each generative process so that each sample is parametrized slightly differently but still clearly belongs to a specific class. The same model architecture is trained for each dataset. Importantly, this architecture implements four encoder segments: the first two are dense, so their respective prototype layers learn localized features, while the last two dilate exponentially, so their prototype layers learn longer-term features. To evaluate the learned representations, we fit several models of varying complexity to recover the label of the original generative process.
 
-\paragraph{Periodic Series} This dataset consists of periodic (sinusoidal) series. The data generative process is determined by two components: wave parameters (frequency, amplitude, vertical shifts, phase shifts, drift) and noise parameters (amplitude jittering, frequency jittering, additive Gaussan noise, baseline wander). We generate five classes: (1) base sine wave, (2) base sine wave with different frequency and amplitude, (3) sine wave with positive linear drift, (4) sine wave with negative linear drift, (5) sine wave with positive vertical shift. The same noise parameters are applied to all 5 classes. Examples of a generated series from each class are shown in Figure \ref{fig:periodic_univariate_examples}.
+\paragraph{Periodic Series} This dataset consists of periodic (sinusoidal) series. The data generative process is determined by two components: wave parameters (frequency, amplitude, vertical shifts, phase shifts, drift) and noise parameters (amplitude jittering, frequency jittering, additive Gaussan noise, baseline wander). We generate five classes: (1) base sine wave, (2) base sine wave with different frequency and amplitude, (3) sine wave with positive linear drift, (4) sine wave with negative linear drift, (5) sine wave with positive vertical shift. The same noise parameters are applied to all 5 classes. Examples of a generated series from each class are shown in Figure \ref{fig:periodic_univariate_examples}. 
 
 \begin{figure}
     \centering 
@@ -245,9 +247,54 @@ In this section, we create several synthetic datasets to test the model's abilit
     \label{fig:periodic_univariate_examples}
 \end{figure}
 
-ProtoTSRL is trained on this dataset to generate representations with 300 features. We first analyze the evolution of the learned prototype spaces throughout training via the average pairwise similarity between prototypes in each layer. 
+ProtoTSRL is trained on this dataset to generate representations with 300 features. We first analyze the evolution of the learned prototype spaces throughout training via the average pairwise similarity between prototypes in each layer. Lower average similarity implies the prototypes are more diverse and further apart within their respective latent space, thereby learning to capture a broader range of morphological structures. We expect prototype similarity to decrease in Stage 1 training due to the prototype regularization component and to remain constant in Stage 2 as prototype layers are frozen. However, in Stage 3, the objective does not regularize prototypes at all, so the behavior of prototype similarity is unknown. Prototype similarities at each layer are shown in Figure \ref{fig:periodic_univariate_dynamics}. Perhaps predictably, these trajectories indicate that the model quickly prefers to diversify later prototype spaces that represent long-term morphologies. Indeed, for highly periodic series such as these, local morphologies are unlikely to hold much unique information and are more prone to corruption due to added noise -- all important characteristics of this dataset (i.e. wave parameters) are present and detectable over long time horizons. However, it appears that global training disrupts this paradigm: in final epochs, early prototype layers fluctuate significantly while later ones are largely fixed. 
 
-\paragraph{Autoregressive Series}
+\begin{figure}
+    \centering 
+    \includegraphics[width = 0.5\textwidth]{periodic_univariate_dynamics.png}
+    \caption{Average pairwise prototype similarity by layer.}
+    \label{fig:periodic_univariate_dynamics}
+\end{figure}
+
+Because ProtoTSRL learns fixed-length representations, we are additionally able to visualize the representation space directly via DR and evaluate representation quality through the geometry of the learned space. PaCMAP embeddings of periodic series representations in two and three dimensions are shown in Figure \ref{fig:periodic_pacmap}. We include both two and three dimensional embeddings because the geometry of the embedding is not always obvious in two dimensions. These embeddings are also somewhat predictable. ProtoTSRL clearly distinguishes series by frequency and amplitude (classes 1 and 2). On the other hand, positive vertical shift and positive linear drift (classes 3 and 5) result in series that overlap extensively, and the model struggles to separate them. Also of note is the separation between the base series and the negative linear drift (classes 1 and 4). The two are separable, but their embeddings appear intertwined; this is particularly evident in three dimensions.
+
+\begin{figure}
+    \centering 
+    \includegraphics[width = \textwidth]{periodic_univariate_pacmap2d.png} \\
+    \includegraphics[width = \textwidth]{periodic_univariate_pacmap3d.png}
+    \caption{PaCMAP embeddings of periodic series representations in two and three dimensions.}
+    \label{fig:periodic_pacmap}
+\end{figure}
+
+Lastly, we evaluate representation quality with a classification-based downstream task. We train models of varying complexities (logistic regression, decision tree, random forest, and multilayer perceptron) to label each representation with the generative process from which it was drawn. Model performance metrics are listed in Table \ref{tab:periodic-model-accuracies}.
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}
+    {p{0.1\textwidth} p{0.20\textwidth} p{0.20\textwidth} p{0.20\textwidth} p{0.20\textwidth}}
+    & \centering\textbf{Logistic Regression} & \centering\textbf{Decision Tree} & \centering\textbf{Random Forest} & \centering\arraybackslash\textbf{Multilayer Perceptron} \\[0.8em]
+    \hline
+    \textbf{Accuracy}
+    & \centering 0.952 & \centering 0.964 & \centering 0.982 & \centering\arraybackslash 0.964 \\
+    [0.6em]
+\end{tabular}
+\vspace{0.8em}
+\caption{Model accuracies: downstream classification.}
+\label{tab:periodic-model-accuracies}
+\end{table}
+
+\paragraph{Autoregressive Series} This dataset consists of autogressive series. The data generative process is determined by the order of temporal dependence and the strength of noise two components: wave parameters (frequency, amplitude, vertical shifts, phase shifts, drift) and noise parameters (amplitude jittering, frequency jittering, additive Gaussan noise, baseline wander). We generate five classes: (1) base sine wave, (2) base sine wave with different frequency and amplitude, (3) sine wave with positive linear drift, (4) sine wave with negative linear drift, (5) sine wave with positive vertical shift. The same noise parameters are applied to all 5 classes. Examples of a generated series from each class are shown in Figure \ref{fig:periodic_univariate_examples}. 
+
+\begin{figure}
+    \centering 
+    \includegraphics[width = 0.8\textwidth]{periodic1.png} \\
+    \includegraphics[width = 0.8\textwidth]{periodic2.png} \\
+    \includegraphics[width = 0.4\textwidth]{periodic3.png}
+    \caption{Example series from each class of periodic series.}
+    \label{fig:periodic_univariate_examples}
+\end{figure}
 
 \subsection{Atrial Fibrillation Detection in PPG Signal}
 
