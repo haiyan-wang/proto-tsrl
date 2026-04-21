@@ -15,7 +15,7 @@ class UnivariateModelSFT(nn.Module):
         self.untuned_model = untuned_model
 
         self.linear_layer = nn.Linear(
-            in_features = UnivariateModel.representation_dimension,
+            in_features = untuned_model.representation_dimension,
             out_features = n_classes
         )
 
