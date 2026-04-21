@@ -144,4 +144,9 @@ Yingfan Wang, Haiyang Huang, Cynthia Rudin, and Yaron Shaposhnik.
 \newblock {Understanding How Dimension Reduction Tools Work: An Empirical Approach to Deciphering t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization}.
 \newblock {\em Journal of Machine Learning Research}, 22(201):1--73, 2021.
 
+\bibitem{soto20-deepbeat}
+Jessica~Torres Soto and Euan Ashley.
+\newblock Deepbeat: A multi-task deep learning approach to assess signal quality and arrhythmia detection in wearable devices.
+\newblock {\em arXiv preprint arXiv:2001.00155}, 2020.
+
 \end{thebibliography}

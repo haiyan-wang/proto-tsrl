@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  16 APR 2026 07:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  20 APR 2026 12:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -546,74 +546,90 @@ Package pdftex.def Info: figures/arch2.jpg  used on input line 100.
 Underfull \vbox (badness 1983) has occurred while \output is active []
 
  [4 <./figures/arch2.jpg>] [5] [6]
-<figures/periodic1.png, id=161, 949.6278pt x 268.8444pt>
-File: figures/periodic1.png Graphic file (type png)
-<use figures/periodic1.png>
-Package pdftex.def Info: figures/periodic1.png  used on input line 241.
-(pdftex.def)             Requested size: 469.75499pt x 132.98608pt.
-<figures/periodic2.png, id=163, 949.6278pt x 268.8444pt>
-File: figures/periodic2.png Graphic file (type png)
-<use figures/periodic2.png>
-Package pdftex.def Info: figures/periodic2.png  used on input line 242.
-(pdftex.def)             Requested size: 469.75499pt x 132.98608pt.
-<figures/periodic3.png, id=164, 500.8311pt x 268.8444pt>
-File: figures/periodic3.png Graphic file (type png)
-<use figures/periodic3.png>
-Package pdftex.def Info: figures/periodic3.png  used on input line 243.
-(pdftex.def)             Requested size: 234.87749pt x 126.07793pt.
-<figures/periodic_univariate_dynamics.png, id=166, 354.123pt x 353.4003pt>
+<figures/periodic_univariate_dynamics.png, id=162, 354.123pt x 353.4003pt>
 File: figures/periodic_univariate_dynamics.png Graphic file (type png)
 <use figures/periodic_univariate_dynamics.png>
-Package pdftex.def Info: figures/periodic_univariate_dynamics.png  used on input line 252.
-(pdftex.def)             Requested size: 281.85585pt x 281.30238pt.
-<figures/periodic_univariate_pacmap2d.png, id=168, 1798.8003pt x 357.7365pt>
+Package pdftex.def Info: figures/periodic_univariate_dynamics.png  used on input line 245.
+(pdftex.def)             Requested size: 234.87749pt x 234.40428pt.
+ [7]
+<figures/periodic_univariate_pacmap2d.png, id=176, 1798.8003pt x 357.7365pt>
 File: figures/periodic_univariate_pacmap2d.png Graphic file (type png)
 <use figures/periodic_univariate_pacmap2d.png>
-Package pdftex.def Info: figures/periodic_univariate_pacmap2d.png  used on input line 261.
+Package pdftex.def Info: figures/periodic_univariate_pacmap2d.png  used on input line 254.
 (pdftex.def)             Requested size: 469.75499pt x 93.41869pt.
-<figures/periodic_univariate_pacmap3d.png, id=169, 1727.9757pt x 371.4678pt>
+<figures/periodic_univariate_pacmap3d.png, id=177, 1727.9757pt x 371.4678pt>
 File: figures/periodic_univariate_pacmap3d.png Graphic file (type png)
 <use figures/periodic_univariate_pacmap3d.png>
-Package pdftex.def Info: figures/periodic_univariate_pacmap3d.png  used on input line 262.
+Package pdftex.def Info: figures/periodic_univariate_pacmap3d.png  used on input line 255.
 (pdftex.def)             Requested size: 469.75499pt x 100.98349pt.
- [7]
-Overfull \hbox (3.02159pt too wide) in paragraph at lines 273--282
+
+Overfull \hbox (3.02159pt too wide) in paragraph at lines 266--275
  [][] 
  []
 
-<figures/autoregressive1.png, id=184, 949.6278pt x 324.4923pt>
-File: figures/autoregressive1.png Graphic file (type png)
-<use figures/autoregressive1.png>
-Package pdftex.def Info: figures/autoregressive1.png  used on input line 290.
-(pdftex.def)             Requested size: 469.75499pt x 160.51277pt.
-<figures/autoregressive2.png, id=185, 500.8311pt x 324.4923pt>
-File: figures/autoregressive2.png Graphic file (type png)
-<use figures/autoregressive2.png>
-Package pdftex.def Info: figures/autoregressive2.png  used on input line 291.
-(pdftex.def)             Requested size: 234.87749pt x 152.1747pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [8 <./figures/periodic1.png> <./figures/periodic2.png> <./figures/periodic3.png>] [9 <./figures/periodic_univariate_dynamics.png> <./figures/periodic_univariate_pacmap2d.png> <./figures/periodic_univariate_pacmap3d.png>]
-<figures/autoregressive_univariate_dynamics.png, id=203, 354.123pt x 354.123pt>
+ [8 <./figures/periodic_univariate_dynamics.png> <./figures/periodic_univariate_pacmap2d.png> <./figures/periodic_univariate_pacmap3d.png>]
+<figures/autoregressive_univariate_dynamics.png, id=188, 354.123pt x 353.4003pt>
 File: figures/autoregressive_univariate_dynamics.png Graphic file (type png)
 <use figures/autoregressive_univariate_dynamics.png>
-Package pdftex.def Info: figures/autoregressive_univariate_dynamics.png  used on input line 305.
-(pdftex.def)             Requested size: 281.85585pt x 281.87766pt.
-<figures/autoregressive_univariate_pacmap2d.png, id=205, 1798.8003pt x 357.7365pt>
+Package pdftex.def Info: figures/autoregressive_univariate_dynamics.png  used on input line 291.
+(pdftex.def)             Requested size: 234.87749pt x 234.40428pt.
+<figures/autoregressive_univariate_pacmap2d.png, id=190, 1798.8003pt x 357.7365pt>
 File: figures/autoregressive_univariate_pacmap2d.png Graphic file (type png)
 <use figures/autoregressive_univariate_pacmap2d.png>
-Package pdftex.def Info: figures/autoregressive_univariate_pacmap2d.png  used on input line 314.
+Package pdftex.def Info: figures/autoregressive_univariate_pacmap2d.png  used on input line 300.
 (pdftex.def)             Requested size: 469.75499pt x 93.41869pt.
-<figures/autoregressive_univariate_pacmap3d.png, id=206, 1728.6984pt x 365.6862pt>
+<figures/autoregressive_univariate_pacmap3d.png, id=191, 1728.6984pt x 365.6862pt>
 File: figures/autoregressive_univariate_pacmap3d.png Graphic file (type png)
 <use figures/autoregressive_univariate_pacmap3d.png>
-Package pdftex.def Info: figures/autoregressive_univariate_pacmap3d.png  used on input line 315.
+Package pdftex.def Info: figures/autoregressive_univariate_pacmap3d.png  used on input line 301.
 (pdftex.def)             Requested size: 469.75499pt x 99.36711pt.
+ [9 <./figures/autoregressive_univariate_dynamics.png>]
+<figures/ppg_deep_dynamics.png, id=203, 354.123pt x 353.4003pt>
+File: figures/ppg_deep_dynamics.png Graphic file (type png)
+<use figures/ppg_deep_dynamics.png>
+Package pdftex.def Info: figures/ppg_deep_dynamics.png  used on input line 311.
+(pdftex.def)             Requested size: 234.87749pt x 234.40428pt.
+<figures/ppg_deep_pacmap2d.png, id=205, 1798.8003pt x 357.7365pt>
+File: figures/ppg_deep_pacmap2d.png Graphic file (type png)
+<use figures/ppg_deep_pacmap2d.png>
+Package pdftex.def Info: figures/ppg_deep_pacmap2d.png  used on input line 319.
+(pdftex.def)             Requested size: 469.75499pt x 93.41869pt.
+<figures/ppg_deep_pacmap3d.png, id=206, 1727.9757pt x 368.577pt>
+File: figures/ppg_deep_pacmap3d.png Graphic file (type png)
+<use figures/ppg_deep_pacmap3d.png>
+Package pdftex.def Info: figures/ppg_deep_pacmap3d.png  used on input line 320.
+(pdftex.def)             Requested size: 469.75499pt x 100.19762pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 7030) has occurred while \output is active []
 
- [10 <./figures/autoregressive1.png> <./figures/autoregressive2.png>] [11 <./figures/autoregressive_univariate_dynamics.png> <./figures/autoregressive_univariate_pacmap2d.png> <./figures/autoregressive_univariate_pacmap3d.png>] [12] (./paper.bbl [13]) [14] (./paper.aux)
+ [10 <./figures/autoregressive_univariate_pacmap2d.png> <./figures/autoregressive_univariate_pacmap3d.png> <./figures/ppg_deep_dynamics.png>]
+<figures/nsr_proto22_deep.png, id=218, 503.7219pt x 213.1965pt>
+File: figures/nsr_proto22_deep.png Graphic file (type png)
+<use figures/nsr_proto22_deep.png>
+Package pdftex.def Info: figures/nsr_proto22_deep.png  used on input line 347.
+(pdftex.def)             Requested size: 225.48038pt x 95.43004pt.
+<figures/nsr_proto36_deep.png, id=219, 503.7219pt x 213.1965pt>
+File: figures/nsr_proto36_deep.png Graphic file (type png)
+<use figures/nsr_proto36_deep.png>
+Package pdftex.def Info: figures/nsr_proto36_deep.png  used on input line 348.
+(pdftex.def)             Requested size: 225.48038pt x 95.43004pt.
+<figures/afib_proto111_deep.png, id=220, 503.7219pt x 213.1965pt>
+File: figures/afib_proto111_deep.png Graphic file (type png)
+<use figures/afib_proto111_deep.png>
+Package pdftex.def Info: figures/afib_proto111_deep.png  used on input line 349.
+(pdftex.def)             Requested size: 225.48038pt x 95.43004pt.
+<figures/afib_proto37_deep.png, id=221, 503.7219pt x 213.1965pt>
+File: figures/afib_proto37_deep.png Graphic file (type png)
+<use figures/afib_proto37_deep.png>
+Package pdftex.def Info: figures/afib_proto37_deep.png  used on input line 350.
+(pdftex.def)             Requested size: 225.48038pt x 95.43004pt.
+
+Underfull \vbox (badness 2134) has occurred while \output is active []
+
+ [11 <./figures/ppg_deep_pacmap2d.png> <./figures/ppg_deep_pacmap3d.png>] [12 <./figures/nsr_proto22_deep.png> <./figures/nsr_proto36_deep.png> <./figures/afib_proto111_deep.png> <./figures/afib_proto37_deep.png>] [13] (./paper.bbl [14]) [15] (./paper.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -622,18 +638,18 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 8DA237DC0EEF4A7701B6C390C3E8B4EE;1222.
  ) 
 Here is how much of TeX's memory you used:
- 15163 strings out of 474116
- 243900 string characters out of 5743682
+ 15192 strings out of 474116
+ 244914 string characters out of 5743682
  1946187 words of memory out of 5000000
- 36999 multiletter control sequences out of 15000+600000
+ 37022 multiletter control sequences out of 15000+600000
  603163 words of font info for 219 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,16n,79p,2808b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (14 pages, 1447206 bytes).
+Output written on paper.pdf (15 pages, 1814960 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 252 compressed objects within 3 object streams
- 76 named destinations out of 1000 (max. 500000)
- 43149 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 341 PDF objects out of 1000 (max. 8388607)
+ 264 compressed objects within 3 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 43159 words of extra memory for PDF output out of 51595 (max. 10000000)
 
