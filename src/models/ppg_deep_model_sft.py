@@ -12,16 +12,16 @@ class UnivariateModelSFT(nn.Module):
 
         super().__init__()
 
-        self.untuned_model = untuned_model
+        self.representer = untuned_model
 
         self.linear_layer = nn.Linear(
-            in_features = untuned_model.representation_dimension,
+            in_features = self.representer.representation_dimension,
             out_features = n_classes
         )
 
     def forward(self, x):
 
-        repr = self.untuned_model(x)
+        repr = self.representer(x)
         logits = self.linear_layer(repr)
 
         return logits 
