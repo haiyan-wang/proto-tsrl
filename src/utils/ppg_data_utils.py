@@ -36,7 +36,7 @@ def load_data(
         - y: (N,) ndarray of binary labels indicating presence of afib if return_labels = True
     """
 
-    with np.load(f'{file_path}/{dataset}.npz') as data:
+    with np.load(f'{file_path}/ppg_{dataset}.npz') as data:
         ppg_signal = data['signal']
         ppg_qual = data['qa_label']
         rhythm = data['rhythm']
