@@ -13,6 +13,8 @@ class UnivariateModel(nn.Module):
 
         super().__init__()
 
+        self.representation_dimension = representation_dimension
+
         self.mask_probability = mask_probability
         
         self.masking_encoder = nn.Sequential(
