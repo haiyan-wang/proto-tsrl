@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex paper"] 1776879416.50438 "paper.aux" "paper.bbl" "paper" 1776879708.41253 0
+["bibtex paper"] 1776888034.73281 "paper.aux" "paper.bbl" "paper" 1776891038.42945 0
   "./references.bib" 1776341078.37469 16743 56b504db99661b51b59fa824ae1ad59e ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "paper.aux" 1776879708.02988 15072 6ed44dc1cb934ee1fbb411fc8a56e21b "pdflatex"
+  "paper.aux" 1776891038.20931 15113 ef19eaba7a9343c1d1a168f6c8b49a60 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1776879706.2672 "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" "paper.pdf" "paper" 1776879708.4127 0
-  "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" 1776879586.94454 67689 7e08d40fc6a5984cab74188a37a5e9a8 ""
+["pdflatex"] 1776891036.33259 "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" "paper.pdf" "paper" 1776891038.4296 0
+  "/Users/haiyanwang/Downloads/thesis/paper/paper.tex" 1776891035.77285 66386 6411745a2cbc9076cbcafdf21889c857 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -141,6 +141,8 @@
   "figures/arch2.png" 1776838134.18334 47946 f570a3cb1338fd500378e46e487db53b ""
   "figures/autoregressive1.png" 1776340387.6572 92742 357a383f17cb530b8045e4acd73e988f ""
   "figures/autoregressive2.png" 1776340390.86295 56346 6995ed1344aec6d195289fa10616b8d8 ""
+  "figures/autoregressive_multivariate_dynamics.png" 1776885257.09066 46230 f4118107215ab9414eeadbc45d89f9bf ""
+  "figures/autoregressive_multivariate_pacmap.png" 1776885705.50535 144764 db7e536ff0e508c5fe3a8bc04d0cb4c8 ""
   "figures/autoregressive_univariate_dynamics.png" 1776840846.94953 49369 fc2c4b8c36cba76296e75ae84470c262 ""
   "figures/autoregressive_univariate_pacmap.png" 1776841397.99845 120807 90070806956b3b3929b98882afa87d74 ""
   "figures/nsr_proto22_deep.png" 1776342931.64931 71085 3e779b2312b619e2c6ed3ad600a529b9 ""
@@ -155,10 +157,10 @@
   "figures/ppg_deep_pacmap.png" 1776875704.91203 205711 3e9b87bee030ca325cb2e948a736859d ""
   "figures/ppg_deep_sft_pacmap.png" 1776848077.33389 205006 a497130879c445a2c2e9644746f582e3 ""
   "figures/var.png" 1776879705.59316 154518 b16a1ea36a0efe740bd864c72ff348f6 ""
-  "paper.aux" 1776879708.02988 15072 6ed44dc1cb934ee1fbb411fc8a56e21b "pdflatex"
-  "paper.bbl" 1776879416.57403 8810 c635eaf65ea504ff47d5affb6e2e961c "bibtex paper"
-  "paper.out" 1776879708.03074 1222 8da237dc0eef4a7701b6c390c3e8b4ee "pdflatex"
-  "paper.tex" 1776879586.94454 67689 7e08d40fc6a5984cab74188a37a5e9a8 ""
+  "paper.aux" 1776891038.20931 15113 ef19eaba7a9343c1d1a168f6c8b49a60 "pdflatex"
+  "paper.bbl" 1776888034.831 8810 c635eaf65ea504ff47d5affb6e2e961c "bibtex paper"
+  "paper.out" 1776891038.21016 1222 8da237dc0eef4a7701b6c390c3e8b4ee "pdflatex"
+  "paper.tex" 1776891035.77285 66386 6411745a2cbc9076cbcafdf21889c857 ""
   (generated)
   "paper.aux"
   "paper.log"

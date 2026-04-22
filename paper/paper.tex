@@ -344,16 +344,7 @@ To understand model performance and representation quality in greater detail, we
     \label{tab:periodic_nlp_confusion_matrix}
 \end{table}
 
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%
-
-\paragraph{Vector Autoregression Series} autoregressive series of order $p$ which we denote as VAR($d, p$) where $d$ is the feature dimensionality of the series and $p$ is the order of the temporal dependence as before:
+\paragraph{Vector Autoregression Series} This dataset consists of autoregressive series of order $p$ which we denote as VAR($d, p$) where $d$ is the feature dimensionality of the series and $p$ is the order of the temporal dependence as before. The series is defined by the recurrence
 \begin{align*}
     \mathbf{x_t} = A_0 + \sum_{k=1}^p A_k \mathbf{x_{t-k}} + \mathbf \epsilon
 \end{align*}
@@ -367,27 +358,27 @@ where $A_0 \in \mathbb R^d$, $A_k \in \mathbb R^{d \times d}$ for all $1 \leq k 
     \label{fig:var_data_examples}
 \end{figure}
 
-[BOOKMARK] Prototype similarities at each layer are shown in Figure \ref{fig:periodic_univariate_dynamics}. These trajectories also indicate that the model quickly prefers to diversify later prototype spaces that represent long-term morphologies. For highly periodic series, we again hypothesize that local morphologies are unlikely to hold much unique information as they are more prone to corruption due to added noise. However, it appears that global training challenges this hypothesis: in final epochs, the earliest prototype layer becomes significantly more diverse while later ones are approximately fixed. It is unclear why this is the case -- some wave parameters (i.e. frequency and amplitude) may be detectable locally, but this should affect the prototype space in Stage 1 as well as Stage 3. 
+Prototype similarities at each layer are shown in Figure \ref{fig:autoregressive_multivariate_dynamics}. Again, the model prefers to diversify later prototype spaces that represent long-term morphologies, and the justification for this is the same as for univariate autoregressive series. However, the learning rate here is noticeably faster than for univariate series -- later prototype diversity increases incredibly rapidly in Stage 1 training. Global training also induces volatility in all prototype layers including the final layer, in contrast to previous experiments.
 
 \begin{figure}
     \centering 
-    \includegraphics[width = 0.7\textwidth]{periodic_univariate_dynamics.png}
+    \includegraphics[width = 0.7\textwidth]{autoregressive_multivariate_dynamics.png}
     \caption{Average pairwise prototype similarity by layer for periodic series representation. Early layer diversification is evident during Stage 3 training (epochs 46-55).}
-    \label{fig:periodic_univariate_dynamics}
+    \label{fig:autoregressive_multivariate_dynamics}
 \end{figure}
 
-PaCMAP embeddings of periodic series representations in two and three dimensions are shown in Figure \ref{fig:periodic_pacmap}. The three dimensional visualization is of particular importance. ProtoTSRL clearly distinguishes series by frequency and amplitude (class 2). On the other hand, positive linear drift is only partly distinguished, and it overlaps significantly with positive vertical shift (class 5). There is also separation between the base series and negative linear drift (classes 1 and 4). The two are separable, but their embeddings are intertwined. Many of these nuances are only evident in three dimensions: the two dimensional embedding mixes classes together, but this is not reflective of manifold geometry. 
+PaCMAP embeddings of VAR series representations in two and three dimensions are shown in Figure \ref{fig:autoregressive_multivariate_pacmap}. Unlike for univariate autoregressive series, ProtoTSRL is less able to separate latent temporal dependence structure in multivariate settings. In particular, it distinguishes the simple dependence structure of VAR(1) well, but the complex dependence structures of VAR(5) and VAR(10) are not well-separated. 
 
 \begin{figure}
     \centering 
-    \includegraphics[width = 0.95\textwidth]{periodic_univariate_pacmap.png}
+    \includegraphics[width = 0.95\textwidth]{autoregressive_multivariate_pacmap.png}
     \caption{PaCMAP embeddings of periodic series representations in two and three dimensions.}
-    \label{fig:periodic_pacmap}
+    \label{fig:autoregressive_multivariate_pacmap}
 \end{figure}
 
-Lastly, we evaluate representation quality. Model accuracies are listed in Table \ref{tab:periodic_model_accuracies}. The strong performance of these models indicate that the learned representations indeed captured important semantic information about the underlying series. Moreover, in conjunction with the representation space visualizations provided by PaCMAP, these results suggest that perfect class separation in the representation space is not a precondition for effective information preservation. Despite the mixing of various classes present in the DR embeddings, even simple models were able to learn a highly accurate decision boundary that distinguishes between different latent generative processes. 
+Unlike for univariate periodic data, poor separation in the representation space is more significantly reflected in classification performance (Tables \ref{tab:var_model_accuracies} and \ref{tab:var_confusion_matrix}). As expected ,VAR(1) is easily distinguishable and responsible for much of the observed accuracy of classification models. However, VAR(5) and VAR(10) prove to be difficult for the model to differentiate. Hyperparameter tuning is costly for models of this size, but these results suggest that our chosen method of increasing model complexity and representation capacity is insufficient. Rather than increasing the size and number of prototypes, an alternative approach is to increase the depth of the encoder to allow the model to extract and recognize more complex temporal relationships.
 
-\begin{table}[ht]
+\begin{table}[ht!]
 \centering
 \renewcommand{\arraystretch}{1.6}
 \setlength{\tabcolsep}{5pt}
@@ -396,46 +387,33 @@ Lastly, we evaluate representation quality. Model accuracies are listed in Table
     & \centering\textbf{Logistic Regression} & \centering\textbf{Decision Tree} & \centering\textbf{Random Forest} & \centering\arraybackslash\textbf{Multilayer Perceptron} \\[0.8em]
     \hline
     \textbf{Accuracy}
-    & \centering 0.952 & \centering 0.964 & \centering 0.982 & \centering\arraybackslash 0.964 \\
+    & \centering 0.776 & \centering 0.750 & \centering 0.793 & \centering\arraybackslash 0.774 \\
     [0.6em]
 \end{tabular}
 \vspace{0.8em}
-\caption{Model accuracies in classification of periodic series representations.}
-\label{tab:periodic_model_accuracies}
+\caption{Model accuracies in classification of VAR series representations.}
+\label{tab:var_model_accuracies}
 \end{table}
+\vspace{1em}
 
-To understand model performance and representation quality in greater detail, we also include the confusion matrix of the MLP in Table \ref{tab:periodic_nlp_confusion_matrix}. As we saw before, classes 3 and 5 are difficult to distinguish and yield incorrect classifications. However, other classes which appeared to be difficult to separate in the representation space are well-classified here. 
-
-\begin{table}[ht]
-    \centering
-    \renewcommand{\arraystretch}{1.6}
-    \setlength{\tabcolsep}{12pt}
-    \begin{tabular}
-        {p{0.16\textwidth} | p{0.12\textwidth} p{0.12\textwidth} p{0.12\textwidth} p{0.12\textwidth} p{0.12\textwidth}}
-        & \centering\textbf{Predicted Class 1} 
-        & \centering\textbf{Predicted Class 2} 
-        & \centering\textbf{Predicted Class 3} 
-        & \centering\textbf{Predicted Class 4} 
-        & \centering\arraybackslash\textbf{Predicted Class 5} \\[0.8em]
-        \hline
-        \textbf{Actual Class 1} & \centering 210 & \centering 0 & \centering 0 & \centering 0 & \centering\arraybackslash 0 \\[0.6em]
-        \textbf{Actual Class 2} & \centering 0 & \centering 185 & \centering 0 & \centering 0 & \centering\arraybackslash 0 \\[0.6em]
-        \textbf{Actual Class 3} & \centering 0 & \centering 0 & \centering 170 & \centering 0 & \centering\arraybackslash \textcolor{red}{26} \\[0.6em]
-        \textbf{Actual Class 4} & \centering 0 & \centering 0 & \centering 0 & \centering 200 & \centering\arraybackslash 0 \\[0.6em]
-        \textbf{Actual Class 5} & \centering 0 & \centering 0 & \centering \textcolor{red}{9} & \centering 0 & \centering\arraybackslash 200 \\[0.6em]
-    \end{tabular}
-    \vspace{0.8em}
-    \caption{Confusion matrix for classification of periodic series representations with MLP. Incorrect predictions are highlighted in red.}
-    \label{tab:periodic_nlp_confusion_matrix}
+\begin{table}[ht!]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}
+    {p{0.20\textwidth} | p{0.16\textwidth} p{0.16\textwidth} p{0.18\textwidth}}
+    & \centering\textbf{Predicted VAR(1)} 
+    & \centering\textbf{Predicted VAR(5)} 
+    & \centering\arraybackslash\textbf{Predicted VAR(10)} \\[0.8em]
+    \hline
+    \textbf{Actual VAR(1)}  & \centering 340 & \centering 0   & \centering\arraybackslash 0 \\[0.6em]
+    \textbf{Actual VAR(5)}  & \centering 0   & \centering 172 & \centering\arraybackslash \textcolor{red}{150} \\[0.6em]
+    \textbf{Actual VAR(10)} & \centering 0   & \centering \textcolor{red}{76}  & \centering\arraybackslash 262 \\[0.6em]
+\end{tabular}
+\vspace{0.8em}
+\caption{Confusion matrix for VAR(1), VAR(5), and VAR(10) classification. Incorrect predictions are highlighted in red.}
+\label{tab:var_confusion_matrix}
 \end{table}
-
-%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
 
 \subsection{PPG Signals} We use artificial PPG data generated to train DeepBeat \cite{soto20-deepbeat}. The dataset contains constant-length PPG signal data with varying amounts of noise. Each series is labeled with a binary indicator of whether atrial fibrillation (AFib) occurs at some point within the series. Examples of AFib and normal sinus rhythm (NSR) can be found in Figure \ref{fig:ppg_data_examples}.
 
@@ -455,7 +433,7 @@ PaCMAP embeddings of PPG series representations in two and three dimensions are 
     \label{fig:ppg_deep_pacmap}
 \end{figure}
 
-Given the poor separation in the representation space, it is somewhat expected that downstream models do not perform particularly well in classifying representations of AFib and normal PPG signals (Table \ref{tab:ppg_model_accuracies}). However, the confusion matrix for a multilayer perceptron trained on this classification task (Table \ref{tab:ppg_confusion_matrix}) reveals an interesting characteristic in the model's decisions. Much of the model's error originates from false positives, indicating that the model is highly sensitive to anomalies which may include noise artifacts in the data. In comparison, it makes very few false negative mistakes. 
+Given the poor separation in the representation space, we expect that downstream models will not perform particularly well in classifying representations of AFib and normal PPG signals (Table \ref{tab:ppg_model_accuracies}). However, the confusion matrix for a multilayer perceptron trained on this classification task (Table \ref{tab:ppg_confusion_matrix}) reveals an interesting characteristic in the model's decisions. Much of the model's error originates from false positives, indicating that the model is highly sensitive to anomalies which may include noise artifacts in the data. In comparison, it makes very few false negative mistakes. 
 
 \begin{table}[ht!]
 \centering
@@ -493,12 +471,12 @@ Given the poor separation in the representation space, it is somewhat expected t
 
 \paragraph{Supervised Finetuning} Time series data is a particularly powerful application for supervised finetuning (SFT) methods given label sparsity. We attempt SFT for the PPG model by appending a single fully connected layer to the end of a stagewise-pretrained network which takes in a learned representation and outputs a logit of the probability that the representation is one of AFib. The goal of SFT in this context is to teach the model to distinguish between relevant and irrelevant artifacts -- the former characterizes AFib while the latter is a remnant of observation methods (e.g. movement while wearing a PPG sensor). We train this entire modified network with cross entropy loss on a small (10\%), labeled subset of the training set. The same jittering and masking augmentations are applied as before, though we do not include the contrastive sampling step for obvious reasons. However, we note that if we had subsequence annotations (i.e. we know exactly where in each series AFib occurs), we could have performed SFT with a supervised contrastive objective. 
 
-The training dynamics of this model from the start of pretraining to the end of SFT is shown in Figure \ref{fig:ppg_deep_dynamics}. In pretraining, this model differs from the models described above by emphasizing diversity in earlier prototype layers. Indeed, AFib signals are often characterized by short-term morphological features such as inconsistent pulse shapes. In contrast, however, normal sinus rhythm (NSR) is a long-term feature characterized by consistent pulses over time. The combination of these two morphologies may explain why layers 2 and 3 are both highly diverse. The effect of global pretraining is not as erratic as in previous examples, though it does reduce the diversity of earlier layers. This trend has been generally true across all datasets -- global training tends to disrupt earlier prototype layers more than later ones. Far more significant prototype disruption occurs during SFT (after epoch 55). The earliest prototype layer immediately begins collapsing, and later layers also lose a degree of diversity. Early layer collapse may be a positive as AFib signals should be morphologically similar across all series. Certain periodicity characteristics may differ due to factors such as the patient's resting heart rate, but AFib itself is defined by rapid, irregular pulse rhythms which should result in similar PPG signals. As such, early layer collapse could mean that the model is learning which local morphologies are characteristic of AFib and discarding those which merely reflect external noise. 
+The training dynamics of this model from the start of pretraining to the end of SFT are shown in Figure \ref{fig:ppg_deep_dynamics}. In pretraining, this model differs from the models described above by emphasizing diversity in earlier prototype layers. Indeed, AFib signals are often characterized by short-term morphological features such as inconsistent pulse shapes. In contrast, however, normal sinus rhythm (NSR) is a long-term feature characterized by consistent pulses over time. The combination of these two morphologies may explain why layers 2 and 3 are both highly diverse. The effect of global pretraining is not as erratic as in previous examples, though it does reduce the diversity of earlier layers. This trend has been generally true across all datasets -- global training tends to disrupt earlier prototype layers more than later ones. Far more significant prototype disruption occurs during SFT (after epoch 55). The earliest prototype layer immediately begins collapsing, and later layers also lose a degree of diversity. Early layer collapse may be a positive as AFib signals should be morphologically similar across all series. Certain periodicity characteristics may differ due to factors such as the patient's resting heart rate, but AFib itself is defined by rapid, irregular pulse rhythms which should result in similar PPG signals. As such, early layer collapse could mean that the model is learning which local morphologies are characteristic of AFib and discarding those which merely reflect external noise. 
 
 \begin{figure}
     \centering 
     \includegraphics[width = 0.7\textwidth]{ppg_deep_dynamics.png}
-    \caption{Average pairwise prototype similarity by layer.}
+    \caption{Average pairwise prototype similarity by layer including SFT epochs.}
     \label{fig:ppg_deep_dynamics}
 \end{figure}
 
@@ -526,7 +504,7 @@ The effect of SFT is more significantly reflected in downstream classification p
     [0.6em]
 \end{tabular}
 \vspace{0.8em}
-\caption{Model accuracies in classification of PPG data.}
+\caption{Model accuracies in classification of PPG data following SFT.}
 \label{tab:ppg_sft_model_accuracies}
 \end{table}
 \vspace{1em}
