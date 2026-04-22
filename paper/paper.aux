@@ -37,9 +37,9 @@
 \newlabel{sec:methods}{{3}{3}{Methods}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Model Architecture}{3}{subsection.3.1}\protected@file@percent }
 \newlabel{subsec:model}{{3.1}{3}{Model Architecture}{subsection.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Generic ProtoTSRL architecture.}}{4}{figure.caption.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Generic ProtoTSRL architecture with three segments, though arbitrarily many segments can be linked together in this fashion. Note that the data augmentation block preceding the encoder is only activated during training.}}{4}{figure.caption.3}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:arch}{{1}{4}{Generic ProtoTSRL architecture}{figure.caption.3}{}}
+\newlabel{fig:arch}{{1}{4}{Generic ProtoTSRL architecture with three segments, though arbitrarily many segments can be linked together in this fashion. Note that the data augmentation block preceding the encoder is only activated during training}{figure.caption.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Contrastive Learning Framework}{5}{subsection.3.2}\protected@file@percent }
 \newlabel{subsec:loss}{{3.2}{5}{Contrastive Learning Framework}{subsection.3.2}{}}
 \@writefile{toc}{\contentsline {paragraph}{Sampling}{5}{section*.4}\protected@file@percent }
@@ -56,32 +56,60 @@
 \newlabel{sec:experiments}{{4}{7}{Experiments}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Synthetic Time Series}{7}{subsection.4.1}\protected@file@percent }
 \newlabel{subsec:synthetic_univariate}{{4.1}{7}{Synthetic Time Series}{subsection.4.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Periodic Series}{7}{section*.10}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Average pairwise prototype similarity by layer.}}{8}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:periodic_univariate_dynamics}{{2}{8}{Average pairwise prototype similarity by layer}{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces PaCMAP embeddings of periodic series representations in two and three dimensions.}}{8}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:periodic_pacmap}{{3}{8}{PaCMAP embeddings of periodic series representations in two and three dimensions}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {paragraph}{Autoregressive Series}{7}{section*.10}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Example autoregressive series from each class (AR(1), AR(5), and AR(10)).}}{8}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:autoregressive_data_examples}{{2}{8}{Example autoregressive series from each class (AR(1), AR(5), and AR(10))}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Average pairwise prototype similarity by layer for autoregressive series representation. These trajectories are flat during Stage 2 training (epochs 31 to 45), and early layer volatility is evident during Stage 3 training (epochs 46-55).}}{9}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:autoregressive_univariate_dynamics}{{3}{9}{Average pairwise prototype similarity by layer for autoregressive series representation. These trajectories are flat during Stage 2 training (epochs 31 to 45), and early layer volatility is evident during Stage 3 training (epochs 46-55)}{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces PaCMAP embeddings of autoregressive series representations in two and three dimensions. These embeddings reflect perfect separation in the representation space.}}{9}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:autoregression_pacmap}{{4}{9}{PaCMAP embeddings of autoregressive series representations in two and three dimensions. These embeddings reflect perfect separation in the representation space}{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Example periodic series from each class.}}{10}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:periodic_data_examples}{{5}{10}{Example periodic series from each class}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {paragraph}{Periodic Series}{10}{section*.14}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Average pairwise prototype similarity by layer for periodic series representation. Early layer diversification is evident during Stage 3 training (epochs 46-55).}}{11}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:periodic_univariate_dynamics}{{6}{11}{Average pairwise prototype similarity by layer for periodic series representation. Early layer diversification is evident during Stage 3 training (epochs 46-55)}{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces PaCMAP embeddings of periodic series representations in two and three dimensions.}}{11}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:periodic_pacmap}{{7}{11}{PaCMAP embeddings of periodic series representations in two and three dimensions}{figure.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Model accuracies in classification of periodic series representations.}}{12}{table.caption.18}\protected@file@percent }
+\newlabel{tab:periodic_model_accuracies}{{1}{12}{Model accuracies in classification of periodic series representations}{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Confusion matrix for classification of periodic series representations with MLP. Incorrect predictions are highlighted in red.}}{12}{table.caption.19}\protected@file@percent }
+\newlabel{tab:periodic_nlp_confusion_matrix}{{2}{12}{Confusion matrix for classification of periodic series representations with MLP. Incorrect predictions are highlighted in red}{table.caption.19}{}}
+\@writefile{toc}{\contentsline {paragraph}{Vector Autoregression Series}{12}{section*.20}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces VAR(10) sample series plotted by channel.}}{13}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:var_data_examples}{{8}{13}{VAR(10) sample series plotted by channel}{figure.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Average pairwise prototype similarity by layer for periodic series representation. Early layer diversification is evident during Stage 3 training (epochs 46-55).}}{13}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:periodic_univariate_dynamics}{{9}{13}{Average pairwise prototype similarity by layer for periodic series representation. Early layer diversification is evident during Stage 3 training (epochs 46-55)}{figure.caption.22}{}}
 \citation{soto20-deepbeat}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Average pairwise prototype similarity by layer.}}{9}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:autoregressive_univariate_dynamics}{{4}{9}{Average pairwise prototype similarity by layer}{figure.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Model accuracies: downstream classification.}}{9}{table.caption.13}\protected@file@percent }
-\newlabel{tab:periodic_model_accuracies}{{1}{9}{Model accuracies: downstream classification}{table.caption.13}{}}
-\@writefile{toc}{\contentsline {paragraph}{Autoregressive Series}{9}{section*.14}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces PaCMAP embeddings of autoregressive series representations in two and three dimensions.}}{10}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:autoregression_pacmap}{{5}{10}{PaCMAP embeddings of autoregressive series representations in two and three dimensions}{figure.caption.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Average pairwise prototype similarity by layer.}}{10}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:ppg_deep_dynamics}{{6}{10}{Average pairwise prototype similarity by layer}{figure.caption.17}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}PPG Signals}{10}{subsection.4.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces PaCMAP embeddings of PPG series representations in two and three dimensions.}}{11}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:ppg_pacmap}{{7}{11}{PaCMAP embeddings of PPG series representations in two and three dimensions}{figure.caption.18}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Confusion matrix for NSR and AFib classification}}{11}{table.caption.19}\protected@file@percent }
-\newlabel{tab:ppg_confusion_matrix}{{2}{11}{Confusion matrix for NSR and AFib classification}{table.caption.19}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Highly activated prototypes for NSR (top) and AFib (bottom). Each prototype is identified by (layer, index).}}{12}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:ppg_proto_act}{{8}{12}{Highly activated prototypes for NSR (top) and AFib (bottom). Each prototype is identified by (layer, index)}{figure.caption.20}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{12}{section.5}\protected@file@percent }
-\newlabel{sec:discussion}{{5}{12}{Discussion}{section.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{Limitations}{12}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Future Work}{12}{section*.22}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces PaCMAP embeddings of periodic series representations in two and three dimensions.}}{14}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:periodic_pacmap}{{10}{14}{PaCMAP embeddings of periodic series representations in two and three dimensions}{figure.caption.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Model accuracies in classification of periodic series representations.}}{14}{table.caption.24}\protected@file@percent }
+\newlabel{tab:periodic_model_accuracies}{{3}{14}{Model accuracies in classification of periodic series representations}{table.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}PPG Signals}{14}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Confusion matrix for classification of periodic series representations with MLP. Incorrect predictions are highlighted in red.}}{15}{table.caption.25}\protected@file@percent }
+\newlabel{tab:periodic_nlp_confusion_matrix}{{4}{15}{Confusion matrix for classification of periodic series representations with MLP. Incorrect predictions are highlighted in red}{table.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Example PPG data. Note that both examples are noisy and contain artifacts such as anomalous spikes.}}{15}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:ppg_data_examples}{{11}{15}{Example PPG data. Note that both examples are noisy and contain artifacts such as anomalous spikes}{figure.caption.26}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Model accuracies in classification of PPG data.}}{15}{table.caption.28}\protected@file@percent }
+\newlabel{tab:ppg_model_accuracies}{{5}{15}{Model accuracies in classification of PPG data}{table.caption.28}{}}
+\@writefile{toc}{\contentsline {paragraph}{Supervised Finetuning}{15}{section*.30}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces PaCMAP embeddings of PPG series representations in two and three dimensions.}}{16}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:ppg_deep_pacmap}{{12}{16}{PaCMAP embeddings of PPG series representations in two and three dimensions}{figure.caption.27}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Confusion matrix for NSR and AFib classification with MLP.}}{16}{table.caption.29}\protected@file@percent }
+\newlabel{tab:ppg_confusion_matrix}{{6}{16}{Confusion matrix for NSR and AFib classification with MLP}{table.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Average pairwise prototype similarity by layer.}}{17}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:ppg_deep_dynamics}{{13}{17}{Average pairwise prototype similarity by layer}{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces PaCMAP embeddings of PPG series representations after SFT in two and three dimensions. PaCMAP embeddings are rotation invariant, so we compare these embeddings with those of representations generated without SFT by the shape of the embeddings, not the direction from which it is viewed.}}{17}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:ppg_deep_sft_pacmap}{{14}{17}{PaCMAP embeddings of PPG series representations after SFT in two and three dimensions. PaCMAP embeddings are rotation invariant, so we compare these embeddings with those of representations generated without SFT by the shape of the embeddings, not the direction from which it is viewed}{figure.caption.32}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Model accuracies in classification of PPG data.}}{18}{table.caption.33}\protected@file@percent }
+\newlabel{tab:ppg_sft_model_accuracies}{{7}{18}{Model accuracies in classification of PPG data}{table.caption.33}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Confusion matrix for NSR and AFib classification with MLP following SFT.}}{18}{table.caption.34}\protected@file@percent }
+\newlabel{tab:ppg_sft_confusion_matrix}{{8}{18}{Confusion matrix for NSR and AFib classification with MLP following SFT}{table.caption.34}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{18}{section.5}\protected@file@percent }
+\newlabel{sec:discussion}{{5}{18}{Discussion}{section.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Highly activated prototypes for NSR (top) and AFib (bottom). Each prototype is identified by (layer, index).}}{19}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:ppg_proto_act}{{15}{19}{Highly activated prototypes for NSR (top) and AFib (bottom). Each prototype is identified by (layer, index)}{figure.caption.35}{}}
+\@writefile{toc}{\contentsline {paragraph}{Limitations}{19}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Future Work}{19}{section*.37}\protected@file@percent }
 \bibstyle{unsrt}
 \bibdata{references}
 \bibcite{bengio13-rlsurvey}{{1}{}{{}}{{}}}
@@ -116,4 +144,4 @@
 \bibcite{wang20-pacmap}{{30}{}{{}}{{}}}
 \bibcite{soto20-deepbeat}{{31}{}{{}}{{}}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{15}
+\gdef \@abspage@last{21}
